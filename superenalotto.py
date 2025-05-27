@@ -76,7 +76,7 @@ def esamina_intervalli(ll, span):
         Calcola la frequenza di estratti contenuti in intervalli di 'span' numeri 
         (es. con span=30 intervalli=1..30, 31..60, 61..90)
 
-        Ritorna a regola relativa alla frequenza dei numeri contenuti in uno specifico intervallo
+        Ritorna la regola relativa alla frequenza dei numeri contenuti in uno specifico intervallo
     """
  
     nro_intervalli = 90//span
@@ -133,6 +133,52 @@ def esamina_ritardi():
 
     return rule
 
+def esamina_ritardi(ll):
+    """
+    Suggerita da copilot (da verificare)
+    Calcola la percentuale di frequenza dei ritardi per ogni numero.
+    Per ogni estrazione, determina il ritardo di ogni numero (quante estrazioni 
+    sono passate dall'ultima volta che è uscito).
+    Ritorna un dizionario con le statistiche dei ritardi.
+    """
+    # Inizializza array per tenere traccia dell'ultima estrazione di ogni numero
+    ultima_estrazione = np.zeros(91, dtype=int)  # indice 0 non usato
+    frequenze_ritardi = {}  # dizionario numero -> lista ritardi
+    
+    # Inizializza il dizionario delle frequenze
+    for i in range(1, 91):
+        frequenze_ritardi[i] = []
+    
+    estrazioni = ll.get_estrazioni()
+    for idx, estrazione in enumerate(estrazioni):
+        # Per ogni numero da 1 a 90
+        for num in range(1, 91):
+            if num in estrazione:
+                # Se il numero è presente nell'estrazione corrente
+                if ultima_estrazione[num] > 0:  # se non è la prima volta che esce
+                    ritardo = idx - ultima_estrazione[num]
+                    frequenze_ritardi[num].append(ritardo)
+                ultima_estrazione[num] = idx
+    
+    # Calcola statistiche
+    statistiche = {}
+    for num in range(1, 91):
+        if frequenze_ritardi[num]:
+            ritardi = np.array(frequenze_ritardi[num])
+            statistiche[num] = {
+                'media': np.round(np.mean(ritardi), 2),
+                'std': np.round(np.std(ritardi), 2),
+                'max': int(np.max(ritardi)),
+                'min': int(np.min(ritardi))
+            }
+    
+    # Crea il formato rule per la compatibilità con il resto del codice
+    rule = {}
+    rule["content"] = "Statistiche ritardi per numero"
+    rule["values"] = [{}]
+    rule["values"][0] = {"type": 1, "statistiche": statistiche}
+    
+    return rule
 ############################################### MAIN #################################################################
 
 def main():
