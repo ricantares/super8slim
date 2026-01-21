@@ -13,16 +13,16 @@ def esamina_combinazioni(ll):
     """
         Fissa una estrazione dallo storico e ne determina le combinazioni
         in classe k=1..6 dei 6 numeri estratti
-        Confronta ogni combinazione della estrazione fissata con le estrazioni successive
+        Confronta ogni combinazione della estrazione fissata con le estrazioni precedenti
         determinando la frequenza media di ogni combinazione
         (i.e. quante volte in media la combinazione di k numeri della estrazione fissata compaiono 
-        nelle successive; es.
+        nelle precedenti; es.
               data l'estrazione base
                 1,13,17,34,57,84 
               e una delle possibili combinazioni in classe 2 dei singoli estratti
                 13, 17
               si calcola la frequenza media della coppia di numeri 13, 17 nelle
-              estrazioni successive a quella base)
+              estrazioni precedenti a quella base)
         Ripete il calcolo per ogni estrazione/blocco calcolando
         infine la media delle medie e la relativa deviazione standard
 
@@ -188,12 +188,12 @@ def main():
     # log file
     logging.basicConfig(filename='superenalotto.log', filemode='w', level=logging.INFO)
 
-    # Dizionario delle evidenze (i.e. regole) ricavate dalle successive analisi dei dati storici
+    # Dizionario delle evidenze (i.e. regole) ricavate dalle precedenti analisi dei dati storici
     logging.info(f"Inizio analisi evidenze {datetime.datetime.now()}")
     evidenze = {}
 
     # Caricamento dello storico estrazioni da file esterno
-    file_estrazione = "./data/estrazioni_2023_2006.csv"
+    file_estrazione = "./data/estrazioni_2026_2006.csv"
     ll = Lotteria(file_estrazione)
     storico_completo = ll.get_estrazioni()
 
@@ -226,8 +226,11 @@ def main():
     evidenze["rules"][5] = rule
 
     # frequenza singolo estratto
-    rule = esamina_ritardi()
+    rule = esamina_ritardi(ll)
     evidenze["rules"][6] = rule
+    
+    #TODO: stabilito un ritardo massimo accettabile, determinare quanti numeri ritardatari possono essere presenti in una estrazione 
+    #todo: in alternativa, determinare il ritardo (oppure i ritardi su diverse ampiezze di ritardo) di una estrazione ottenuto sommando i ritardi dei singoli numeri estratti      
     
     with open('evidenze.json', 'w') as fp:
         json.dump(evidenze, fp, indent=4)
