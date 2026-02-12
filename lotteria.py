@@ -9,7 +9,7 @@ Classe che implementa attributi e metodi generali
 
     Nota: manca di gestione degli errori
 """
-
+from scipy.special import comb
 import numpy as np
 import random as rnd
 from itertools import combinations
@@ -19,7 +19,7 @@ import logging
 class Lotteria:  
     __nro_estrazioni_std = 90  # Numero standard di estrazioni considerate nell'analisi storica
     __nro_estrazioni_90 = 15  # Numero di estrazioni contenenti 90 singoli estratti
-    __combinazioni = [6, 15, 20, 15, 6, 1]  # Numero di combinazioni semplici di n=6 oggetti in classe k=(1, 2, 3, 4, 5, 6)
+    # __combinazioni = [6, 15, 20, 15, 6, 1]  # Numero di combinazioni semplici di n=6 oggetti in classe k=(1, 2, 3, 4, 5, 6)
                                             # combinazioni = n!/(k!(n-1)!)
 
     __file_estrazioni = ""  
@@ -83,7 +83,7 @@ class Lotteria:
             da una determinata estrazione iniziale (init)
 
             a partire dalle combinazioni semplici della base
-            - con combinazioni = n!/(k!(n-1)!) con n=6 e k=(1..6)
+            - con combinazioni = n!/(k!(n-1)!) (i.e. coefficienti binomiali di 6 su k con k=1..6)
             - viene calcolato il numero di volte che una determinata
               combinazione compare nel subset storico 
 
@@ -102,11 +102,13 @@ class Lotteria:
         # 4 ! 15
         # 5 !  6
         # 6 !  1
+        vettore_combinazioni = [comb(6, k, exact=True) for k in range(1,7)] # vettore coefficienti binomiali di 6 su k
+        
         ac = [list(combinations(base, k)) for k in range(1,7)] # combinazioni della base
         s = self.__matrice_estrazioni[init:size+init] # subset storico
         freq = {}
         for i in range(0,6): # per ognuna delle 6 combinazioni su tutte le classi k
-            f = np.empty([0, self.__combinazioni[i]], dtype=int)
+            f = np.empty([0, vettore_combinazioni[i]], dtype=int)
             for j in range(0, len(ac[i])): # per ogni singola combinazione in classe k
                 c = np.array(ac[i][j]) # combinazione da esaminare
                 l = 0 # contatore presenze
