@@ -107,10 +107,14 @@ class RebaseLib:
             x = np.round(np.std(s, axis=0), 2) 
             v = np.median(s, axis=0)
             wm, wc = stats.mode(s)[0], stats.mode(s)[1]
-            y = np.min(s, axis=0)
-            z = np.max(s, axis=0)
-            #sk = stats.skew(s, axis=0)
-            #ku = stats.kurtosis(s, axis=0)  
+            #y = np.min(s, axis=0)
+            #z = np.max(s, axis=0)
+            sk = np.round(stats.skew(s, axis=0), 2)
+            # ku = np.round(stats.kurtosis(s, axis=0), 2)  
+            # q1 = np.round(np.percentile(s, 25, axis=0), 2)
+            # q2 = np.round(np.percentile(s, 75, axis=0), 2)
+            q1 = np.round(np.quantile(s, 0.25, axis=0), 2)
+            q2 = np.round(np.quantile(s, 0.75, axis=0), 2)
             match i:
                 case 0: print(f"\nValori per estratto singolo")
                 case 1: print(f"\nValori per coppie di estratti")
@@ -119,14 +123,32 @@ class RebaseLib:
                 case 4: print(f"\nValori per cinquine di estratti")
                 case 5: print(f"\nValori per sestine di estratti")
             #print(f"- sum: {t}, \n- mean: {u}, \n- std: {x}, \n- median: {v}, \n- mode: {wm}, {wc}, \n- min: {y}, \n- max: {z}")
-            # print(f"- skewness: {np.round(sk, 2)}")
-            # print(f"- kurtosis: {np.round(ku, 2)}")
-            minSummary = u - x
-            maxSum = u + x
-            risultato = self.sum_sommari_filtered(s, minSummary, maxSum)
-            copertura = np.round((risultato / t) * 100, 2)
+            print(f"- mean    : {u}")
+            print(f"- median  : {v}")
+            print(f"- mode    : {wm}, {wc}")
+            print(f"- std     : {x}")
+            print(f"- skewness: {sk}")
+            #print(f"- kurtosis: {ku}")
+            print(f"- q1      : {q1}")
+            print(f"- q3      : {q2}")
             
-            print(f"    Totale presenze                      [range U(k)]: {np.round(minSummary[0], 0)} .. {np.round(maxSum[0], 0)}, copertura: {copertura[0]}%")
-            print(f"    Combinazioni con almeno una presenza [range V(k)]: {np.round(minSummary[1], 0)} .. {np.round(maxSum[1], 0)}, copertura: {copertura[1]}%")
-            print(f"    Combinazioni senza presenze          [range W(k)]: {np.round(minSummary[2], 0)} .. {np.round(maxSum[2], 0)}, copertura: {copertura[2]}%")
-            print(f"    Massima frequenza di presenza        [range Y(k)]: {np.round(minSummary[3], 0)} .. {np.round(maxSum[3], 0)}, copertura: {copertura[3]}%")
+            if np.all(abs(sk) <= 0.5):
+                print("  Distribuzione simmetrica: ")
+            else:
+                print("  Distribuzione asimmetrica: ")
+                
+            print("  (media e deviazione standard):")
+            self.print_dati_statistici(s, t, u - x, u + x)
+                        
+            print("  (quartili):")
+            self.print_dati_statistici(s, t, q1, q2)
+            
+    def print_dati_statistici(self, dati_colonna, somma_colonna, min, max):
+
+        dati_nei_limiti = self.sum_sommari_filtered(dati_colonna, min, max)
+        copertura = np.round((dati_nei_limiti / somma_colonna) * 100, 2)
+        
+        print(f"    Totale presenze                      [range U(k)]: {np.round(min[0], 0)} .. {np.round(max[0], 0)}, copertura: {copertura[0]}%")
+        print(f"    Combinazioni con almeno una presenza [range V(k)]: {np.round(min[1], 0)} .. {np.round(max[1], 0)}, copertura: {copertura[1]}%")
+        print(f"    Combinazioni senza presenze          [range W(k)]: {np.round(min[2], 0)} .. {np.round(max[2], 0)}, copertura: {copertura[2]}%")
+        print(f"    Massima frequenza di presenza        [range Y(k)]: {np.round(min[3], 0)} .. {np.round(max[3], 0)}, copertura: {copertura[3]}%")
