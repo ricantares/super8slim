@@ -10,13 +10,12 @@ Key concepts:
 - Combinazioni: All possible k-combinations from the base (k=1..6)
 - Presenze: How many times a specific combination appears in the sample
 """
+# TODO: riconciliare italiano e inglese nel codice e nei commenti, mantenendo coerenza e chiarezza
 
-from lotteria import Lotteria  # Base lottery class
 import numpy as np  # Numerical computing
 from itertools import combinations  # Combination generator
 from scipy.special import comb  # Binomial coefficient calculator
 from scipy import stats  # Statistical functions
-import matplotlib.pyplot as plt  # Plotting library
 
 class RebaseLib:
     """
@@ -29,166 +28,6 @@ class RebaseLib:
     def __init__(self):
         """Initialize the RebaseLib object."""
         pass
-    
-    def count_values_with_coverage(self, arr, min_val, max_val):
-        
-        # Handle empty array
-        if len(arr) == 0:
-            return 0.0
-        
-        if np.any(min_val > max_val):
-            return 0.0
-        
-        sum_range = np.array([])
-        total_sum = np.array([])
-        
-        dati = arr
-        #print("dati: ", dati)
-        for k in range(len(dati[0])):
-            #print("k: ", k)
-            column_data = np.array(dati)[:, k]
-            #print("column_data: ", column_data)
-            if len(column_data) > 0:  # Check if list is not empty
-                uniq = np.unique_counts(column_data)
-                #print(uniq)
-                #print(uniq.values)
-                #print(uniq.counts)
-                count_array = np.zeros(max(uniq.values) + 1, dtype=int)
-                for val, count in zip(uniq.values, uniq.counts):
-                    count_array[val] = count
-                #print(count_array)
-                min_idx = np.maximum(0, np.round(min_val[k], 0)).astype(int)
-                max_idx = np.minimum(len(count_array) - 1, np.round(max_val[k], 0)).astype(int)  
-                sum_range = np.append(sum_range, np.sum(count_array[min_idx:max_idx + 1]))
-                total_sum = np.append(total_sum, np.sum(count_array))
-            else:
-                sum_range = np.append(sum_range, 0)
-                total_sum = np.append(total_sum, 0)
-            #print("sum_range: ", sum_range)
-            #print("total_sum: ", total_sum)
-        
-        # Calculate coverage ratio (avoid division by zero)
-        return sum_range / total_sum if np.any(total_sum > 0) else 0.0
-
-    def count_values_with_coverage_old(self, arr, min_val, max_val):
-        """
-        Count occurrences and calculate coverage within a value range.
-        
-        Combines count_values and calc_copertura into a single operation:
-        1. Counts occurrences of each unique value in the input array
-        2. Calculates coverage ratio for values in range [min_val, max_val]
-        
-        Args:
-            arr (array-like): Input array of integers
-            min_val (int): Lower bound index (inclusive)
-            max_val (int): Upper bound index (inclusive)
-        
-        Returns:
-            float: Coverage ratio (0.0 to 1.0), representing the percentage
-                   of total counts that fall within the specified range
-        """
-        # Handle empty array
-        if len(arr) == 0:
-            return 0.0
-        
-        # Step 1: Count occurrences of each unique value
-        unique, counts = np.unique(arr, return_counts=True)
-        
-        # Create count array indexed by value
-        max_val_in_arr = int(max(unique))
-        count_array = np.zeros(max_val_in_arr + 1, dtype=int)
-        
-        for val, count in zip(unique, counts):
-            count_array[val] = count
-        
-        # Step 2: Calculate coverage within specified range
-        # Clamp bounds to valid array indices
-        print("pippo: ", min_val, max_val)
-        print("pippo round: ", np.round(min_val, 0), np.round(max_val, 0))
-        print("count_array: ", count_array, len(count_array))
-        #min_idx = max(0, np.round(min_val, 0)).astype(int)
-        #max_idx = min(len(count_array) - 1, np.round(max_val, 0)).astype(int)
-        min_idx = np.maximum(0, np.round(min_val, 0)).astype(int)
-        max_idx = np.minimum(len(count_array) - 1, np.round(max_val, 0)).astype(int)    
-        print("pippo1: ", min_idx, max_idx)
-        
-        # Invalid range check
-        if np.any(min_idx > max_idx):
-            return 0
-        
-        # Sum of counts within the specified range
-        sum_range = np.sum(count_array[min_idx:max_idx + 1])
-        
-        # Total sum of all counts
-        total_sum = np.sum(count_array)
-        
-        # Calculate coverage ratio (avoid division by zero)
-        return sum_range / total_sum if total_sum > 0 else 0.0
-
-
-    def get_combinazioni(self):
-        """
-        Calculate binomial coefficients for 6-element combinations.
-        
-        Returns:
-            list: Vector of binomial coefficients C(6,k) for k=1..6
-                  [6, 15, 20, 15, 6, 1]
-                  Represents number of possible combinations of k elements from 6.
-        """
-        return [comb(6, k, exact=True) for k in range(1,7)] # vettore coefficienti binomiali di 6 elementi in classe k = (1..6)
-
-    def presenze_singola_combinazione(self, combinazioni_base, campione):
-        """
-        Calculate presence count for a single combination class.
-        
-        For a given combination class (e.g., all pairs k=2), counts how many
-        times each combination appears in the historical sample.
-        
-        Args:
-            combinazioni_base (list): List of combinations for a specific class k
-            campione (numpy.ndarray): Matrix of historical extractions to search
-        
-        Returns:
-            numpy.ndarray: Vector of presence counts for each combination
-        """
-        totale_combinazioni = len(combinazioni_base)
-        # Initialize empty vector for presence counts per combination class k
-        pe = np.empty([0, totale_combinazioni], dtype=int) # vettore di presenze per ogni combinazione di classe k, inizializzato a zero
-        for j in range(0, totale_combinazioni):
-            cb = np.array(combinazioni_base[j])  # j-th combination from class k
-            ip = 0  # Presence counter
-            
-            # Count how many times this combination appears in the historical sample
-            for m in range(0, len(campione)):
-                # If the combination is contained in campione[m], it's a presence
-                if (len(np.setdiff1d(cb, campione[m])) == 0):
-                    ip += 1 
-            
-            pe = np.append(pe, ip)  # Append presence count for this combination
-        
-        return pe
-    
-    def presenze_k_combinazioni(self, combinazioni_base, campione):
-        """
-        Calculate presences for all 6 combination classes (k=1..6).
-        
-        Args:
-            combinazioni_base (list): List of combinations for all 6 classes [[k=1], [k=2], ...]
-            campione (numpy.ndarray): Historical sample to analyze
-        
-        Returns:
-            list: Nested list [6] where each element contains presence vectors for class k
-        """
-        presenze = [[] for i in range(0,6)]
-        
-        # Process each of the 6 combination classes
-        for i in range(0, 6):
-            pe = self.presenze_singola_combinazione(combinazioni_base[i], campione)
-            # If there are presences, add the presence vector to the list for class k
-            if sum(pe) > 0 or presenze[i] != []:
-                presenze[i].append(pe)
-        
-        return presenze
     
     def calcolo_presenze(self, storico_estrazioni, size_intervallo):
         """
@@ -261,34 +100,142 @@ class RebaseLib:
         
         return sommari
     
-    def sum_sommari_filtered(self, sommari, minSummary, maxSummary):
+    def count_values_with_coverage(self, arr, min_val, max_val):
         """
-        Calculate sum of sommari along axis=0 only for values between minSummary and maxSummary.
+        Optimized version of count_values_with_coverage using vectorized NumPy operations.
         
-        Parameters:
-        -----------
-        sommari : numpy.ndarray
-            2D array where each row i contains sommari[i]
-        minSummary : float
-            Minimum value to include in the sum (inclusive)
-        maxSummary : float
-            Maximum value to include in the sum (inclusive)
+        Counts occurrences and calculates coverage ratio within value ranges for each column.
+        
+        Args:
+            arr (numpy.ndarray): 2D array of integers with 4 columns and multiple rows
+                                - column 0 = Totale presenze 
+                                - column 1 = Combinazioni con almeno una presenza
+                                - column 2 = Combinazioni senza presenze
+                                - column 3 = Massima frequenza di presenza
+            min_val (array-like): Array of 4 floats - lower bounds for each column
+            max_val (array-like): Array of 4 floats - upper bounds for each column
         
         Returns:
-        --------
-        numpy.ndarray
-            Sum along axis=0 with filtering applied (values outside range excluded)
+            numpy.ndarray: Array of 4 floats representing coverage ratios (0.0 to 1.0)
+                          Returns all zeros on any error
         """
-        # Create a boolean mask for values between minSummary and maxSummary (inclusive)
-        mask = (sommari >= minSummary) & (sommari <= maxSummary)
+        # Initialize output with zeros (default for error cases)
+        result = np.zeros(4, dtype=np.float64)
         
-        # Apply mask: keep values in range, set others to 0
-        filtered = np.where(mask, sommari, 0)
+        try:
+            # Convert inputs to numpy arrays
+            arr = np.asarray(arr, dtype=np.int64)
+            min_val = np.asarray(min_val, dtype=np.float64)
+            max_val = np.asarray(max_val, dtype=np.float64)
+            
+            # Validate dimensions
+            if arr.ndim != 2 or arr.shape[1] != 4:
+                return result
+            if min_val.shape != (4,) or max_val.shape != (4,):
+                return result
+            
+            # Handle empty array
+            if arr.size == 0 or arr.shape[0] == 0:
+                return result
+            
+            # Validate range (min must be <= max)
+            if np.any(min_val > max_val):
+                return result
+            
+            # Process each column with vectorized operations
+            for col_idx in range(4):
+                column_data = arr[:, col_idx]
+                
+                # Get unique values and their counts using numpy
+                unique, counts = np.unique(column_data, return_counts=True)
+                
+                # Create a mapping array (indexed by value)
+                max_value = int(unique.max()) if unique.size > 0 else 0
+                count_array = np.zeros(max_value + 1, dtype=np.int64)
+                
+                # Vectorized assignment using advanced indexing
+                count_array[unique] = counts
+                
+                # Calculate indices with clipping
+                min_idx = np.clip(np.round(min_val[col_idx]).astype(np.int64), 0, len(count_array) - 1)
+                max_idx = np.clip(np.round(max_val[col_idx]).astype(np.int64), 0, len(count_array) - 1)
+                
+                # Handle invalid range after clipping
+                if min_idx > max_idx:
+                    result[col_idx] = 0.0
+                    continue
+                
+                # Calculate sums
+                sum_range = np.sum(count_array[min_idx:max_idx + 1]) # Sum of counts in the specified range
+                total_sum = np.sum(count_array) # Total sum of counts for the entire column
+                
+                # Calculate coverage ratio (avoid division by zero)
+                result[col_idx] = sum_range / total_sum if total_sum > 0 else 0.0
+            
+            return result
+            
+        except (TypeError, ValueError, IndexError, OverflowError):
+            # Return zeros on any exception
+            return result
+    
+    def get_combinazioni(self):
+        """
+        Calculate binomial coefficients for 6-element combinations.
         
-        # Sum along axis=0
-        result = np.sum(filtered, axis=0)
+        Returns:
+            list: Vector of binomial coefficients C(6,k) for k=1..6
+                  [6, 15, 20, 15, 6, 1]
+                  Represents number of possible combinations of k elements from 6.
+        """
+        return [comb(6, k, exact=True) for k in range(1,7)] # vettore coefficienti binomiali di 6 elementi in classe k = (1..6)
+      
+    def presenze_singola_combinazione(self, combinazioni_base, campione):
+        """
+        Calculate presence count for a single combination class.
         
-        return result
+        For a given combination class (e.g., all pairs k=2), counts how many
+        times each combination appears in the historical sample.
+        
+        Args:
+            combinazioni_base (list): List of combinations for a specific class k
+            campione (numpy.ndarray): Matrix of historical extractions to search
+        
+        Returns:
+            numpy.ndarray: Vector of presence counts for each combination
+        """
+        totale_combinazioni = len(combinazioni_base)
+        # Initialize empty vector for presence counts per combination class k
+        pe = np.empty([0, totale_combinazioni], dtype=int) # vettore di presenze per ogni combinazione di classe k, inizializzato a zero
+        for j in range(0, totale_combinazioni):
+            cb = np.array(combinazioni_base[j])  # j-th combination from class k
+            ip = 0  # Presence counter
+            
+            # Count how many times this combination appears in the historical sample
+            for m in range(0, len(campione)):
+                # If the combination is contained in campione[m], it's a presence
+                if (len(np.setdiff1d(cb, campione[m])) == 0):
+                    ip += 1 
+            
+            pe = np.append(pe, ip)  # Append presence count for this combination
+        
+        return pe
+    
+    def print_dati_statistici(self, dati_colonna, somma_colonna, min, max):
+        """
+        Print statistical data for a column within specified range.
+        
+        Args:
+            dati_colonna: Column data array
+            somma_colonna: Column sum
+            min: Minimum bound array
+            max: Maximum bound array
+        """
+        copertura = np.round((self.count_values_with_coverage(dati_colonna, min, max)) * 100, 2)
+        
+        print(f"    Totale presenze                      [range U(k)]: {np.round(min[0], 0)} .. {np.round(max[0], 0)}, copertura: {copertura[0]}%")
+        print(f"    Combinazioni con almeno una presenza [range V(k)]: {np.round(min[1], 0)} .. {np.round(max[1], 0)}, copertura: {copertura[1]}%")
+        print(f"    Combinazioni senza presenze          [range W(k)]: {np.round(min[2], 0)} .. {np.round(max[2], 0)}, copertura: {copertura[2]}%")
+        print(f"    Massima frequenza di presenza        [range Y(k)]: {np.round(min[3], 0)} .. {np.round(max[3], 0)}, copertura: {copertura[3]}%")
     
     def statistiche_sommari(self, sommari):
         """
@@ -346,16 +293,3 @@ class RebaseLib:
                 # Print coverage analysis (quartile range)
                 print("  (quartili):")
                 self.print_dati_statistici(s, t, q1, q2)
-                
-    def print_dati_statistici(self, dati_colonna, somma_colonna, min, max):
-
-        # dati_nei_limiti = self.sum_sommari_filtered(dati_colonna, min, max)
-        # copertura = np.round((dati_nei_limiti / somma_colonna) * 100, 2)
-        #print("  Dati colonna: ", dati_colonna)
-        #print("  Dati statistici per range: ", np.round(min, 0), " .. ", np.round(max, 0))
-        copertura = np.round((self.count_values_with_coverage(dati_colonna, min, max)) * 100, 2)
-        
-        print(f"    Totale presenze                      [range U(k)]: {np.round(min[0], 0)} .. {np.round(max[0], 0)}, copertura: {copertura[0]}%")
-        print(f"    Combinazioni con almeno una presenza [range V(k)]: {np.round(min[1], 0)} .. {np.round(max[1], 0)}, copertura: {copertura[1]}%")
-        print(f"    Combinazioni senza presenze          [range W(k)]: {np.round(min[2], 0)} .. {np.round(max[2], 0)}, copertura: {copertura[2]}%")
-        print(f"    Massima frequenza di presenza        [range Y(k)]: {np.round(min[3], 0)} .. {np.round(max[3], 0)}, copertura: {copertura[3]}%")
