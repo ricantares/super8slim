@@ -201,23 +201,22 @@ class OccurencesStats:
         
         return occurrences
     
-    def print_statistics(self, occurrences_summary, min_bounds, max_bounds):
+    def __print_statistic_boundaries(self, min_bounds, max_bounds, coverages):
         """
         Print coverage statistics for each column in the summary.
         
         Args:
-            occurrences_summary: Summary data from occurrences_summary
             min_bounds: Lower bounds for each column
             max_bounds: Upper bounds for each column
         """
-        coverages = np.round((self.count_values_with_coverage(occurrences_summary, min_bounds, max_bounds)) * 100, 2)
         
         print(f"    Totale presenze                      [range U(k)]: {np.round(min_bounds[0], 0)} .. {np.round(max_bounds[0], 0)}, copertura: {coverages[0]}%")
         print(f"    Combinazioni con almeno una presenza [range V(k)]: {np.round(min_bounds[1], 0)} .. {np.round(max_bounds[1], 0)}, copertura: {coverages[1]}%")
         print(f"    Combinazioni senza presenze          [range W(k)]: {np.round(min_bounds[2], 0)} .. {np.round(max_bounds[2], 0)}, copertura: {coverages[2]}%")
         print(f"    Massima frequenza di presenza        [range Y(k)]: {np.round(min_bounds[3], 0)} .. {np.round(max_bounds[3], 0)}, copertura: {coverages[3]}%")
     
-    def calc_statistics(self, summarys):
+    # Solo per la fase di analisi visiva dei dati, non per la regola di generazione
+    def print_statistics(self, summarys):
         """
         Compute and display comprehensive statistics for each class.
         
@@ -250,14 +249,146 @@ class OccurencesStats:
                 print(f"- skewness: {sk}")
                 print(f"- q1      : {q1}")
                 print(f"- q3      : {q2}")
-                
+            
                 if np.all(abs(sk) <= 0.5):
                     print("  Distribuzione simmetrica: ")
                 else:
                     print("  Distribuzione asimmetrica: ")
                 
                 print("  (media e deviazione standard):")
-                self.print_statistics(s, u - x, u + x)
+                min_bounds = u - x
+                max_bounds = u + x
+                coverages = np.round((self.count_values_with_coverage(s, min_bounds, max_bounds)) * 100, 2)
+                self.__print_statistic_boundaries(min_bounds, max_bounds, coverages)
                 
                 print("  (quartili):")
-                self.print_statistics(s, q1, q2)
+                min_bounds = q1
+                max_bounds = q2
+                coverages = np.round((self.count_values_with_coverage(s, min_bounds, max_bounds)) * 100, 2)
+                self.__print_statistic_boundaries(min_bounds, max_bounds, coverages)
+
+
+    def get_statistics_dictionary(self, summaries):
+        """
+        Compute and return comprehensive statistics for each class as a dictionary.
+        
+        Args:
+            summaries: Summary data from occurrences_summary
+        """
+        results = {}
+        class_results = {}
+        class_results["risultati"] = [{}] * 6
+        for i in range(0,6):     
+            s = summaries[i]
+            if len(s) > 0: 
+                class_result = {}
+                class_result["k"] = i + 1
+                match i:
+                    case 0: class_result["description"] = "Valori per estratto singolo"
+                    case 1: class_result["description"] = "Valori per coppie di estratti"
+                    case 2: class_result["description"] = "Valori per terne di estratti"
+                    case 3: class_result["description"] = "Valori per quaterne di estratti"
+                    case 4: class_result["description"] = "Valori per cinquine di estratti"
+                    case 5: class_result["description"] = "Valori per sestine di estratti"
+                t = np.sum(s, axis=0)
+                u = np.round(np.mean(s, axis=0), 2)
+                x = np.round(np.std(s, axis=0), 2)
+                sk = np.round(stats.skew(s, axis=0), 2)
+                
+                q1 = np.round(np.quantile(s, 0.25, axis=0), 2)
+                q2 = np.round(np.quantile(s, 0.75, axis=0), 2)
+    
+                min_bounds_simm = np.round(u - x, 2)
+                max_bounds_simm = np.round(u + x, 2)
+                coverages_simm = np.round((self.count_values_with_coverage(s, min_bounds_simm, max_bounds_simm)) * 100, 2)
+
+                min_bounds_asimm = q1
+                max_bounds_asimm = q2
+                coverages_asimm = np.round((self.count_values_with_coverage(s, min_bounds_asimm, max_bounds_asimm)) * 100, 2)
+                                
+                measures = {}
+                measures["values"] = [{}] * 4
+                for j in range(0, 4): 
+                    measure = {}
+                    measure["id"] = j
+                    match j:
+                        case 0: measure["type"] = "Totale presenze"
+                        case 1: measure["type"] = "Combinazioni con almeno una presenza"
+                        case 2: measure["type"] = "Combinazioni senza presenze"
+                        case 3: measure["type"] = "Massima frequenza di presenza"
+                    measure["total"] = t[j]
+                    measure["mean"] = u[j]
+                    measure["std"] = x[j]
+                    measure["skewness"] = sk[j]
+                    measure["simmetrica"] = {
+                        "min": min_bounds_simm[j],
+                        "max": max_bounds_simm[j],
+                        "coverage": coverages_simm[j]
+                    }
+                    measure["asimmetrica"] = {
+                        "min": min_bounds_asimm[j],
+                        "max": max_bounds_asimm[j],
+                        "coverage": coverages_asimm[j]
+                    }
+                    measures["values"][j] = measure
+                class_result["measures"] = measures
+                class_results["risultati"][i] = class_result
+            #results = class_results
+            for i in range(0, 6):
+                if class_results["risultati"][i] != {}:
+                    results[f"{i+1}"] = class_results["risultati"][i]
+
+        return results
+
+
+# Run as script
+if __name__ == "__main__":
+    import sys
+    import os
+    import json
+    
+    # Default data file
+    default_data_file = "../data/estrazioni_2026_2006.csv"
+    
+    # Parse command line arguments
+    data_file = sys.argv[1] if len(sys.argv) > 1 else default_data_file
+    sample_size = int(sys.argv[2]) if len(sys.argv) > 2 else 15
+    load_rows = int(sys.argv[3]) if len(sys.argv) > 3 else None
+    
+    print(f"SuperEnalotto Statistical Analysis")
+    print(f"====================================")
+    print(f"Data file: {data_file}")
+    print(f"Sample size: {sample_size}")
+    print(f"Load rows: {load_rows if load_rows else 'all'}")
+    print()
+    
+    # Initialize
+    from common_lib import CommonLib
+    clib = CommonLib(data_file)
+    ostats = OccurencesStats()
+    
+    # Load data
+    history_data = clib.load_data(load_rows)
+    print(f"Loaded {len(history_data)} extractions")
+    
+    # Find occurrences
+    print(f"\nCalculating occurrences (sample_size={sample_size})...")
+    occurrences = ostats.find_occurrences(history_data, sample_size)
+    print(f"Analyzed {len(history_data) - sample_size} base positions")
+    
+    # Compute summaries
+    print(f"\nComputing summaries...")
+    summaries = ostats.occurrences_summary(occurrences)
+    
+    # Get statistics
+    results = ostats.get_statistics(summaries)
+    
+    # Output JSON
+    print(f"\nResults (JSON):")
+    print(json.dumps(results, indent=2, default=str))
+    
+    # Save to file
+    output_file = "statistics_results.json"
+    with open(output_file, 'w') as f:
+        json.dump(results, f, indent=2, default=str)
+    print(f"\nResults saved to: {output_file}")
