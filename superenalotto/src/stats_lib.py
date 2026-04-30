@@ -2,13 +2,11 @@
 SuperEnalotto Statistical Analysis Library
 ==========================================
 Functions for analyzing lottery extraction patterns by calculating
-presence frequencies of number combinations across historical draws.
+frequencies of patterns across historical draws.
 
 Key terminology:
 - Base: A single extraction (6 numbers)
-- Campione: Window of historical extractions to analyze
-- Combinazioni: All possible k-combinations from the base (k=1..6)
-- Presenze: Count of how many times a combination appears in the sample
+- Sample: Window of historical extractions to analyze
 """
 
 import numpy as np
@@ -21,7 +19,7 @@ class OccurencesStats:
     """
     Statistical analysis for SuperEnalotto number combinations.
     
-    Analyzes presence (frequency) of number combinations across
+    Analyzes occurrences (frequency) of number combinations across
     different combination classes (k=1 to 6) in lottery draws.
     """
     
@@ -57,18 +55,18 @@ class OccurencesStats:
             # Subsequent extractions forming the sample window
             sample = historical_data[e+1:e+1+sample_size]
             
-            # Generate all k-combinations from the base (k=1..6)
-            # i.e. patterns to search for in the sample window
+            # # Generate all k-combinations from the base (k=1..6)
+            # # i.e. patterns to search for in the sample window
             base_combinations = [list(combinations(base, k)) for k in range(1,7)]
 
-            # Calculate occurences for each combination class
+            # # Calculate occurences for each combination class
             for i in range(0, 6):
                 pe = self.single_combination_occurrences(base_combinations[i], sample)
                 if sum(pe) > 0 or occurrences[i] != []:
                     occurrences[i].append(pe)
                     
         return occurrences
-    
+
     def occurrences_summary(self, occurrences):
         """
         Compute summary statistics for each presence vector.
@@ -99,7 +97,7 @@ class OccurencesStats:
         
         return class_summaries
     
-    def count_values_with_coverage(self, occurrences_summary, lower_bounds, upper_bounds):
+    def __count_values_with_coverage(self, occurrences_summary, lower_bounds, upper_bounds):
         """
         Calculate coverage ratio within value ranges for each column.
         
@@ -201,73 +199,6 @@ class OccurencesStats:
         
         return occurrences
     
-    def __print_statistic_boundaries(self, min_bounds, max_bounds, coverages):
-        """
-        Print coverage statistics for each column in the summary.
-        
-        Args:
-            min_bounds: Lower bounds for each column
-            max_bounds: Upper bounds for each column
-        """
-        
-        print(f"    Totale presenze                      [range U(k)]: {np.round(min_bounds[0], 0)} .. {np.round(max_bounds[0], 0)}, copertura: {coverages[0]}%")
-        print(f"    Combinazioni con almeno una presenza [range V(k)]: {np.round(min_bounds[1], 0)} .. {np.round(max_bounds[1], 0)}, copertura: {coverages[1]}%")
-        print(f"    Combinazioni senza presenze          [range W(k)]: {np.round(min_bounds[2], 0)} .. {np.round(max_bounds[2], 0)}, copertura: {coverages[2]}%")
-        print(f"    Massima frequenza di presenza        [range Y(k)]: {np.round(min_bounds[3], 0)} .. {np.round(max_bounds[3], 0)}, copertura: {coverages[3]}%")
-    
-    # Solo per la fase di analisi visiva dei dati, non per la regola di generazione
-    def print_statistics(self, summarys):
-        """
-        Compute and display comprehensive statistics for each class.
-        
-        Args:
-            summarys: Summary data from occurrences_summary
-        """
-        print("Statistiche sommari:")
-        for i in range(0,6):     
-            s = summarys[i]
-            
-            if len(s) > 0: 
-                t = np.sum(s, axis=0)
-                u = np.round(np.mean(s, axis=0), 2)
-                x = np.round(np.std(s, axis=0), 2)
-                sk = np.round(stats.skew(s, axis=0), 2)
-                
-                q1 = np.round(np.quantile(s, 0.25, axis=0), 2)
-                q2 = np.round(np.quantile(s, 0.75, axis=0), 2)
-                
-                match i:
-                    case 0: print(f"\nValori per estratto singolo")
-                    case 1: print(f"\nValori per coppie di estratti")
-                    case 2: print(f"\nValori per terne di estratti")
-                    case 3: print(f"\nValori per quaterne di estratti")
-                    case 4: print(f"\nValori per cinquine di estratti")
-                    case 5: print(f"\nValori per sestine di estratti")
-                
-                print(f"- mean    : {u}")
-                print(f"- std     : {x}")
-                print(f"- skewness: {sk}")
-                print(f"- q1      : {q1}")
-                print(f"- q3      : {q2}")
-            
-                if np.all(abs(sk) <= 0.5):
-                    print("  Distribuzione simmetrica: ")
-                else:
-                    print("  Distribuzione asimmetrica: ")
-                
-                print("  (media e deviazione standard):")
-                min_bounds = u - x
-                max_bounds = u + x
-                coverages = np.round((self.count_values_with_coverage(s, min_bounds, max_bounds)) * 100, 2)
-                self.__print_statistic_boundaries(min_bounds, max_bounds, coverages)
-                
-                print("  (quartili):")
-                min_bounds = q1
-                max_bounds = q2
-                coverages = np.round((self.count_values_with_coverage(s, min_bounds, max_bounds)) * 100, 2)
-                self.__print_statistic_boundaries(min_bounds, max_bounds, coverages)
-
-
     def get_statistics_dictionary(self, summaries):
         """
         Compute and return comprehensive statistics for each class as a dictionary.
@@ -290,21 +221,21 @@ class OccurencesStats:
                     case 3: class_result["description"] = "Valori per quaterne di estratti"
                     case 4: class_result["description"] = "Valori per cinquine di estratti"
                     case 5: class_result["description"] = "Valori per sestine di estratti"
-                t = np.sum(s, axis=0)
+                t = np.sum(s, axis=0).astype(int)
                 u = np.round(np.mean(s, axis=0), 2)
                 x = np.round(np.std(s, axis=0), 2)
                 sk = np.round(stats.skew(s, axis=0), 2)
                 
                 q1 = np.round(np.quantile(s, 0.25, axis=0), 2)
-                q2 = np.round(np.quantile(s, 0.75, axis=0), 2)
+                q3 = np.round(np.quantile(s, 0.75, axis=0), 2)
     
                 min_bounds_simm = np.round(u - x, 2)
                 max_bounds_simm = np.round(u + x, 2)
-                coverages_simm = np.round((self.count_values_with_coverage(s, min_bounds_simm, max_bounds_simm)) * 100, 2)
+                coverages_simm = np.round((self.__count_values_with_coverage(s, min_bounds_simm, max_bounds_simm)) * 100, 2)
 
                 min_bounds_asimm = q1
-                max_bounds_asimm = q2
-                coverages_asimm = np.round((self.count_values_with_coverage(s, min_bounds_asimm, max_bounds_asimm)) * 100, 2)
+                max_bounds_asimm = q3
+                coverages_asimm = np.round((self.__count_values_with_coverage(s, min_bounds_asimm, max_bounds_asimm)) * 100, 2)
                                 
                 measures = {}
                 measures["values"] = [{}] * 4
@@ -320,6 +251,8 @@ class OccurencesStats:
                     measure["mean"] = u[j]
                     measure["std"] = x[j]
                     measure["skewness"] = sk[j]
+                    measure["q1"] = q1[j]
+                    measure["q3"] = q3[j]
                     measure["simmetrica"] = {
                         "min": min_bounds_simm[j],
                         "max": max_bounds_simm[j],
@@ -340,55 +273,108 @@ class OccurencesStats:
 
         return results
 
+    def print_statistics_from_dict(self, stats_dict):
+        """
+        Print statistics from the dictionary returned by get_statistics_dictionary.
+        
+        Args:
+            stats_dict: Dictionary from get_statistics_dictionary
+        """
+        print("Statistiche sommari (from dictionary):")
+        
+        for key, class_data in stats_dict.items():
+            k = class_data.get("k", int(key))
+            desc = class_data.get("description", "")
+            measures = class_data.get("measures", {})
+            values = measures.get("values", [])
+            
+            print(f"\nClasse k={k}: {desc}")
+            
+            for measure in values:
+                m_type = measure.get("type", "")
+                m_mean = measure.get("mean", [])
+                m_std = measure.get("std", [])
+                m_skew = measure.get("skewness", [])
+                m_q1 = measure.get("q1", [])
+                m_q3 = measure.get("q3", [])
+                
+                print(f"  {m_type}:")
+                print(f"    mean    : {m_mean}")
+                print(f"    std     : {m_std}")
+                print(f"    skewness: {m_skew}")
+                print(f"    q1      : {m_q1}")
+                print(f"    q3      : {m_q3}")
 
-# Run as script
-if __name__ == "__main__":
-    import sys
-    import os
-    import json
+                simm = measure.get("simmetrica", {})
+                asimm = measure.get("asimmetrica", {})
+                
+                print(f"    simmetrica   : min={simm.get('min')}, max={simm.get('max')}, coverage={simm.get('coverage')}%")
+                print(f"    asimmetrica  : min={asimm.get('min')}, max={asimm.get('max')}, coverage={asimm.get('coverage')}%")
+                
+class SequenceStats:
+    """
+    Statistical analysis for sequences of consecutive numbers in SuperEnalotto draws.
     
-    # Default data file
-    default_data_file = "../data/estrazioni_2026_2006.csv"
+    Analyzes the frequency and distribution of sequences of consecutive numbers
+    across historical draws, providing insights into common patterns.
+    """
     
-    # Parse command line arguments
-    data_file = sys.argv[1] if len(sys.argv) > 1 else default_data_file
-    sample_size = int(sys.argv[2]) if len(sys.argv) > 2 else 15
-    load_rows = int(sys.argv[3]) if len(sys.argv) > 3 else None
+    def __init__(self):
+        """Create a new SequenceStats analyzer."""
+        pass
     
-    print(f"SuperEnalotto Statistical Analysis")
-    print(f"====================================")
-    print(f"Data file: {data_file}")
-    print(f"Sample size: {sample_size}")
-    print(f"Load rows: {load_rows if load_rows else 'all'}")
-    print()
-    
-    # Initialize
-    from common_lib import CommonLib
-    clib = CommonLib(data_file)
-    ostats = OccurencesStats()
-    
-    # Load data
-    history_data = clib.load_data(load_rows)
-    print(f"Loaded {len(history_data)} extractions")
-    
-    # Find occurrences
-    print(f"\nCalculating occurrences (sample_size={sample_size})...")
-    occurrences = ostats.find_occurrences(history_data, sample_size)
-    print(f"Analyzed {len(history_data) - sample_size} base positions")
-    
-    # Compute summaries
-    print(f"\nComputing summaries...")
-    summaries = ostats.occurrences_summary(occurrences)
-    
-    # Get statistics
-    results = ostats.get_statistics(summaries)
-    
-    # Output JSON
-    print(f"\nResults (JSON):")
-    print(json.dumps(results, indent=2, default=str))
-    
-    # Save to file
-    output_file = "statistics_results.json"
-    with open(output_file, 'w') as f:
-        json.dump(results, f, indent=2, default=str)
-    print(f"\nResults saved to: {output_file}")
+    def get_sequence_dict(self, history_data):
+        """
+        Get a dictionary of sequence counts for an ordered array of 6 numbers.
+        
+        Args:
+            arr: A list or array of 6 ordered numbers
+        """
+        sequences = []
+        for i in range(0,len(history_data)):
+            base = history_data[i]
+            seq = self.__count_sequences(base)
+            sequences.append(seq)
+            
+        sd = {}
+        tot = np.sum(sequences, axis=0)
+        for i in range(0, len(tot)):
+            sd[i+1] = np.round(tot[i]/len(history_data)*100, 2)
+            
+        return sd      
+
+    def __count_sequences(self, arr):
+        """
+        Given an ordered array of 6 numbers, find all maximal consecutive sequences
+        and return an array where:
+        - index 0: count of sequences of length 2
+        - index 1: count of sequences of length 3
+        - index 2: count of sequences of length 4
+        - index 3: count of sequences of length 5
+        - index 4: count of sequences of length 6
+        - index 5: sum of all previous counts (total number of sequences found)
+
+        Args:
+            arr: a list or array of 6 ordered numbers
+
+        Returns:
+            list of 6 integers
+        """
+        arr = np.array(arr, dtype=int)
+
+        # Find positions where a new run starts (diff != 1)
+        breaks = np.concatenate([[True], np.diff(arr) != 1])
+
+        seq_start = np.where(breaks)[0]
+        seq_end   = np.append(seq_start[1:] - 1, len(arr) - 1)
+        lengths   = seq_end - seq_start + 1   # length of every run
+
+        # Keep only runs of at least 2 (single numbers are not sequences)
+        seq_lengths = lengths[lengths >= 2].tolist()
+
+        # Build counts [len2, len3, len4, len5, len6]
+        counts = [seq_lengths.count(i) for i in range(2, 7)]
+        counts.append(sum(counts))   # total
+
+        return counts
+
