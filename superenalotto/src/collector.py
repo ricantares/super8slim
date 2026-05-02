@@ -1,35 +1,47 @@
 
+import datetime
+import logging
+
 from common_lib import CommonLib
 from stats_lib import OccurencesStats
 from stats_lib import SequenceStats
 
 class Collector:
+    """Collector for SuperEnalotto draw data.
+
+    This class loads historical lottery draw data from a CSV file and
+    provides methods to compute occurrence and sequence statistics for
+    the requested sample sizes.
+    """
+
     def __init__(self, data_file_name, history_size=None, sample_size=15):
         self.data_file_name = data_file_name
         self.history_size = history_size
         self.sample_size = sample_size
+        self.last_extraction_date = None
     
     def collect_data(self):
         """Collect raw draw data from the CSV file."""
         clib = CommonLib(self.data_file_name)
         history_data = clib.load_data(self.history_size)
+        self.last_extraction_date = clib.get_last_extraction_date()
         
         return history_data
     
     def collect_occurrences(self, history_data, sample_size):
         """Collect occurrence statistics from draw data."""
         ostats = OccurencesStats()
-
-        # Load historical draw data from CSV file
-        # #history_data = clib.load_data(self.history_size)
         
         # Compute occurrence frequency for each base in the historical data
         print("\nComputing occurrences for each base:")
+        logging.info(f"Computing occurrences for each base with sample size: {sample_size}")
+        print(f"Occurrences on s={len(history_data)} draws for samples of size alpha={sample_size}:")
+        logging.info(f"Occurrences on s={len(history_data)} draws for samples of size alpha={sample_size}:")
         occurrences = ostats.find_occurrences(history_data, sample_size)
         print("Bases analyzed:  ", len(history_data) - sample_size)
+        logging.info(f"Bases analyzed:  {len(history_data) - sample_size}")
 
         # Summary of results for each combination class
-        print(f"Occurrences on s={len(history_data)} draws for samples of size alpha={sample_size}:")
         summaries = ostats.occurrences_summary(occurrences)
 
         # Output statistics as dictionary
@@ -52,7 +64,7 @@ if __name__ == "__main__":
     import json
     
     # Default output file (optional)
-    DEFAULT_OUTPUT_FILE = "collector_results.json"
+    DEFAULT_OUTPUT_FILE = "superenalotto/collector_results.json"
     
     def main():
         """Main entry point for the Collector script."""
@@ -90,18 +102,28 @@ if __name__ == "__main__":
         if not os.path.exists(args.input_file):
             print(f"Error: Input file not found: {args.input_file}")
             sys.exit(1)
+               
+        # log file
+        logging.basicConfig(filename='superenalotto/analisi_statistiche.log', filemode='w', level=logging.INFO)
+        logging.info(f"Inizio analisi statistiche {datetime.datetime.now()}")
         
         # Initialize collector
         collector = Collector(args.input_file, args.history_size, sample_size)
         print(f"Collector initialized with: data_file={args.input_file}, history_size={args.history_size}, sample_size={sample_size}")
+        logging.info(f"Collector initialized with: data_file={args.input_file}, history_size={args.history_size}, sample_size={sample_size}")
         
-        # Run collection
-        print(f"\nRunning collection...")
+        # Run occurrences collection
+        print(f"\nRunning occurrences collection...")
+        logging.info(f"Running occurrences collection...")
                 
         # Get historical data
         history_data = collector.collect_data()
         
         results = {}
+        results["origine_dati"] = args.input_file
+        results["ultima_estrazione"] = collector.last_extraction_date
+        results["elementi_storico"] = len(history_data)
+        
         results["occurrences"] = {}
         if sample_size is None:  # If 'all' was selected, we will compute for all standard sample sizes
             all_sample_sizes = [15, 30, 60, 90]
@@ -110,17 +132,26 @@ if __name__ == "__main__":
         else:
             results["occurrences"][sample_size] = collector.collect_occurrences(history_data, sample_size)
         print(f"\nOccurrences collected...")
+        logging.info(f"Occurrences collected for sample size: {args.sample_size}")
+        
+        
+        # Run sequences collection
+        print(f"\nRunning sequences collection...")
+        logging.info(f"Running sequences collection...")
         results["sequences"] = collector.collect_sequences(history_data)
         print(f"\nSequences collected...")
+        logging.info(f"Sequences collected")
         
         # Save results
         with open(args.output, 'w') as f:
             json.dump(results, f, indent=2, default=str)
         print(f"Results saved to: {args.output}")
+        logging.info(f"Results saved to: {args.output}")
         
         # Print elapsed time
         elapsed = time.time() - start_time
         print(f"\nElapsed time: {elapsed:.2f} seconds")
+        logging.info(f"Elapsed time: {elapsed:.2f} seconds")
         
         return results
     
