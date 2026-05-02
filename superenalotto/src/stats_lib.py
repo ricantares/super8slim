@@ -378,3 +378,30 @@ class SequenceStats:
 
         return counts
 
+class DelaysStats:
+    """
+    Statistical analysis for delays of number combinations in SuperEnalotto draws.
+    
+    Analyzes the delay (number of draws since last occurrence) of specific
+    number combinations across historical draws, providing insights into
+    patterns of appearance and absence.
+    """
+    
+    def __init__(self):
+        """Create a new DelaysStats analyzer."""
+        pass
+    
+    # Methods for delay analysis would go here
+    def base_delays(self, base, sample):
+ 
+        size = len(sample)
+        delays = np.zeros(6, dtype=int)
+        done = np.zeros(6, dtype=int)
+        for i in range(size):
+            if 0 in done:
+                for j in range(6):
+                    if done[j] == 0 and base[j] not in sample[i]: delays[j] += 1
+                    else: done[j] = 1
+            else: break
+        
+        return delays
