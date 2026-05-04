@@ -9,11 +9,15 @@ Key terminology:
 - Sample: Window of historical extractions to analyze
 """
 
+import logging
+
 import numpy as np
 from itertools import combinations
 from scipy.special import comb
 from scipy import stats
+from common_lib import CommonLib
 
+clib = CommonLib()
 
 class OccurencesStats:
     """
@@ -231,11 +235,13 @@ class OccurencesStats:
     
                 min_bounds_simm = np.round(u - x, 2)
                 max_bounds_simm = np.round(u + x, 2)
-                coverages_simm = np.round((self.__count_values_with_coverage(s, min_bounds_simm, max_bounds_simm)) * 100, 2)
+                #coverages_simm = np.round((self.__count_values_with_coverage(s, min_bounds_simm, max_bounds_simm)) * 100, 2)
+                coverages_simm = np.round((clib.count_values_with_coverage(s, min_bounds_simm, max_bounds_simm)) * 100, 2)
 
                 min_bounds_asimm = q1
                 max_bounds_asimm = q3
-                coverages_asimm = np.round((self.__count_values_with_coverage(s, min_bounds_asimm, max_bounds_asimm)) * 100, 2)
+                #coverages_asimm = np.round((self.__count_values_with_coverage(s, min_bounds_asimm, max_bounds_asimm)) * 100, 2)
+                coverages_asimm = np.round((clib.count_values_with_coverage(s, min_bounds_asimm, max_bounds_asimm)) * 100, 2)
                                 
                 measures = {}
                 measures["values"] = [{}] * 4
@@ -392,7 +398,7 @@ class DelaysStats:
         pass
     
     # Methods for delay analysis would go here
-    def base_delays(self, base, sample):
+    def __base_delays(self, base, sample):
  
         size = len(sample)
         delays = np.zeros(6, dtype=int)
@@ -405,3 +411,86 @@ class DelaysStats:
             else: break
         
         return delays
+    
+    def get_delays_dict(self, history_data):
+        td = []
+        hyp_max_delay = 200 # Valore ipotetico di ritardo massimo per la simulazione
+        if len(history_data) < hyp_max_delay:
+            #print(f"Warning: historical data has only {len(history_data)} entries, which is less than the hypothetical max delay of {hyp_max_delay}. Adjusting max delay to {len(history_data) - 1}.")
+            logging.warning(f"Historical data has only {len(history_data)} entries, which is less than the hypothetical max delay of {hyp_max_delay}. Adjusting max delay to {len(history_data) - 1}.")
+            hyp_max_delay = len(history_data) - 1
+        for i in range(len(history_data) - hyp_max_delay):  
+            #print(f"Estrazione {i+1}: {history_data[i]}")
+            base = history_data[i]  # Prendi l'ultima estrazione come base per il calcolo dei ritardi
+            sample_data = history_data[i+1:i+hyp_max_delay]  # Prendi le prime 100 estrazioni per il campione   
+            delays = self.__base_delays(base, sample_data)
+
+            #print(f"Ritardi: {np.sort(delays)}")
+            min_delay = np.min(delays)
+            max_delay = np.max(delays)
+            mean_delay = np.round(np.mean(delays), 2)
+            tot_delay = np.sum(delays)
+            d = np.array([min_delay, max_delay, mean_delay, tot_delay])
+            #print(f"Ritardo minimo: {min_delay} - massimo: {max_delay} - medio: {mean_delay}")
+            td.append(d)
+            
+        mind = np.round(np.min(td, axis=0), 0)
+        maxd = np.round(np.max(td, axis=0), 0)
+        #print(f"Ritardo totale \n- minimo: {mind} \n- massimo: {maxd}")
+
+        u = np.round(np.mean(td, axis=0), 0)
+        x = np.round(np.std(td, axis=0), 0)
+        sk = np.round(stats.skew(td, axis=0), 2)
+
+        q1 = np.round(np.quantile(td, 0.25, axis=0), 0)
+        q3 = np.round(np.quantile(td, 0.75, axis=0), 0)
+
+        # TODO: aggiungere calcolo copertura
+
+        #print(f"Ritardo totale \n- media: {u} \n- deviazione standard: {x} \n- skewness: {sk} \n- q1: {q1} \n- q3: {q3}")
+
+        min_bounds_simm = np.round(u - x, 2)
+        max_bounds_simm = np.round(u + x, 2)
+        coverages_simm = np.round((clib.count_values_with_coverage(td, min_bounds_simm, max_bounds_simm)) * 100, 2)
+        #print(f"Ritardo totale - copertura intervallo media ± deviazione standard: {coverages_simm}%")
+
+        min_bounds_asimm = q1
+        max_bounds_asimm = q3
+        coverages_asimm = np.round((clib.count_values_with_coverage(td, min_bounds_asimm, max_bounds_asimm)) * 100, 2)
+        #print(f"Ritardo totale - copertura intervallo IQR: {coverages_asimm}%")
+
+        results = {}
+        #results['description'] = "delays"
+        measures = {}
+        measures['values'] = [{}] * 4
+        for j in range(0, 4):
+            type = ""
+            match j:
+                case 0: type = "Ritardo minimo"
+                case 1: type = "Ritardo massimo"
+                case 2: type = "Ritardo medio"
+                case 3: type = "Ritardo totale"
+            measures['values'][j] = {
+                'id': j,
+                'type': type,
+                'min': mind[j],
+                'max': maxd[j],
+                'mean': u[j],
+                'std_dev': x[j],
+                'skewness': sk[j],
+                'q1': q1[j],
+                'q3': q3[j],
+                'simmetrica': {
+                    'min': min_bounds_simm[j],
+                    'max': max_bounds_simm[j],
+                    'coverage': coverages_simm[j]
+                },
+                'asimmetrica': {
+                    'min': min_bounds_asimm[j],
+                    'max': max_bounds_asimm[j],
+                    'coverage': coverages_asimm[j]
+                }
+            }
+        results['measures'] = measures
+        #print(results)
+        return results

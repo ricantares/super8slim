@@ -5,6 +5,7 @@ import logging
 from common_lib import CommonLib
 from stats_lib import OccurencesStats
 from stats_lib import SequenceStats
+from stats_lib import DelaysStats
 
 class Collector:
     """Collector for SuperEnalotto draw data.
@@ -56,6 +57,14 @@ class Collector:
         sstats = SequenceStats()
         sequences = sstats.get_sequence_dict(history_data)
         return sequences
+    
+    
+    def collect_delays(self, history_data):
+        """Collect delay statistics from draw data."""
+        dstats = DelaysStats()
+        delays = dstats.get_delays_dict(history_data)
+        return delays
+
 
 # Run as script
 if __name__ == "__main__":
@@ -141,6 +150,13 @@ if __name__ == "__main__":
         results["sequences"] = collector.collect_sequences(history_data)
         print(f"\nSequences collected...")
         logging.info(f"Sequences collected")
+                
+        # Run delays collection
+        print(f"\nRunning delays collection...")
+        logging.info(f"Running delays collection...")
+        results["delays"] = collector.collect_delays(history_data)
+        print(f"\nDelays collected...")
+        logging.info(f"Delays collected")
         
         # Save results
         with open(args.output, 'w') as f:

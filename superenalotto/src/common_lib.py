@@ -92,3 +92,66 @@ class CommonLib:
                     last_extraction_date = int(line.split(";")[0])
                     break
         return last_extraction_date
+    
+    def count_values_with_coverage(self, data_summary, lower_bounds, upper_bounds):
+        """
+        Calculate coverage ratio within value ranges for each column.
+        
+        Uses vectorized NumPy operations for performance.
+        
+        Args:
+            data_summary: 2D array with n columns and m rows
+            lower_bounds: Array of n lower bounds
+            upper_bounds: Array of n upper bounds
+        
+        Returns:
+            Array of n coverage ratios (0.0 to 1.0)
+        """
+        cols = len(data_summary[0])
+        result = np.zeros(cols, dtype=np.float64)
+        
+        try:
+            data_summary = np.asarray(data_summary, dtype=np.int64)
+            lower_bounds = np.asarray(lower_bounds, dtype=np.float64)
+            upper_bounds = np.asarray(upper_bounds, dtype=np.float64)
+            
+            if data_summary.ndim != 2 or data_summary.shape[1] != cols:
+                return result
+            if lower_bounds.shape != (cols,) or upper_bounds.shape != (cols,):
+                return result
+            
+            if data_summary.size == 0 or data_summary.shape[0] == 0:
+                return result
+            
+            if np.any(lower_bounds > upper_bounds):
+                return result
+            
+            for col_idx in range(cols):
+                column_data = data_summary[:, col_idx]
+                
+                unique, counts = np.unique(column_data, return_counts=True)
+                
+                max_value = int(unique.max()) if unique.size > 0 else 0
+                count_array = np.zeros(max_value + 1, dtype=np.int64)
+                
+                count_array[unique] = counts
+                
+                min_idx = np.clip(np.round(lower_bounds[col_idx]).astype(np.int64), 0, len(count_array) - 1)
+                max_idx = np.clip(np.round(upper_bounds[col_idx]).astype(np.int64), 0, len(count_array) - 1)
+                
+                if min_idx > max_idx:
+                    result[col_idx] = 0.0
+                    continue
+                
+                # Calculate the sum of counts within the specified range
+                sum_range = np.sum(count_array[min_idx:max_idx + 1])
+                # Calculate the total sum of counts for normalization
+                total_sum = np.sum(count_array)
+                
+                # Calculate coverage ratio, handling division by zero
+                result[col_idx] = sum_range / total_sum if total_sum > 0 else 0.0
+            
+            return result
+            
+        except (TypeError, ValueError, IndexError, OverflowError):
+            return result

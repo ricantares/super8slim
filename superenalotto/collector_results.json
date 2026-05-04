@@ -268,804 +268,6 @@
           ]
         }
       }
-    },
-    "30": {
-      "1": {
-        "k": 1,
-        "description": "Valori per estratto singolo",
-        "measures": {
-          "values": [
-            {
-              "id": 0,
-              "type": "Totale presenze",
-              "total": "812",
-              "mean": 11.6,
-              "std": 3.04,
-              "skewness": 0.14,
-              "q1": 10.0,
-              "q3": 14.0,
-              "simmetrica": {
-                "min": 8.56,
-                "max": 14.64,
-                "coverage": 74.29
-              },
-              "asimmetrica": {
-                "min": 10.0,
-                "max": 14.0,
-                "coverage": 57.14
-              }
-            },
-            {
-              "id": 1,
-              "type": "Combinazioni con almeno una presenza",
-              "total": "362",
-              "mean": 5.17,
-              "std": 0.76,
-              "skewness": -0.69,
-              "q1": 5.0,
-              "q3": 6.0,
-              "simmetrica": {
-                "min": 4.41,
-                "max": 5.93,
-                "coverage": 97.14
-              },
-              "asimmetrica": {
-                "min": 5.0,
-                "max": 6.0,
-                "coverage": 84.29
-              }
-            },
-            {
-              "id": 2,
-              "type": "Combinazioni senza presenze",
-              "total": "58",
-              "mean": 0.83,
-              "std": 0.76,
-              "skewness": 0.69,
-              "q1": 0.0,
-              "q3": 1.0,
-              "simmetrica": {
-                "min": 0.07,
-                "max": 1.59,
-                "coverage": 97.14
-              },
-              "asimmetrica": {
-                "min": 0.0,
-                "max": 1.0,
-                "coverage": 84.29
-              }
-            },
-            {
-              "id": 3,
-              "type": "Massima frequenza di presenza",
-              "total": "260",
-              "mean": 3.71,
-              "std": 1.04,
-              "skewness": 0.36,
-              "q1": 3.0,
-              "q3": 4.0,
-              "simmetrica": {
-                "min": 2.67,
-                "max": 4.75,
-                "coverage": 81.43
-              },
-              "asimmetrica": {
-                "min": 3.0,
-                "max": 4.0,
-                "coverage": 70.0
-              }
-            }
-          ]
-        }
-      },
-      "2": {
-        "k": 2,
-        "description": "Valori per coppie di estratti",
-        "measures": {
-          "values": [
-            {
-              "id": 0,
-              "type": "Totale presenze",
-              "total": "97",
-              "mean": 1.39,
-              "std": 1.3,
-              "skewness": 1.09,
-              "q1": 0.0,
-              "q3": 2.0,
-              "simmetrica": {
-                "min": 0.09,
-                "max": 2.69,
-                "coverage": 92.86
-              },
-              "asimmetrica": {
-                "min": 0.0,
-                "max": 2.0,
-                "coverage": 85.71
-              }
-            },
-            {
-              "id": 1,
-              "type": "Combinazioni con almeno una presenza",
-              "total": "93",
-              "mean": 1.33,
-              "std": 1.27,
-              "skewness": 1.2,
-              "q1": 0.0,
-              "q3": 2.0,
-              "simmetrica": {
-                "min": 0.06,
-                "max": 2.6,
-                "coverage": 94.29
-              },
-              "asimmetrica": {
-                "min": 0.0,
-                "max": 2.0,
-                "coverage": 85.71
-              }
-            },
-            {
-              "id": 2,
-              "type": "Combinazioni senza presenze",
-              "total": "957",
-              "mean": 13.67,
-              "std": 1.27,
-              "skewness": -1.2,
-              "q1": 13.0,
-              "q3": 15.0,
-              "simmetrica": {
-                "min": 12.4,
-                "max": 14.94,
-                "coverage": 94.29
-              },
-              "asimmetrica": {
-                "min": 13.0,
-                "max": 15.0,
-                "coverage": 85.71
-              }
-            },
-            {
-              "id": 3,
-              "type": "Massima frequenza di presenza",
-              "total": "53",
-              "mean": 0.76,
-              "std": 0.55,
-              "skewness": -0.07,
-              "q1": 0.0,
-              "q3": 1.0,
-              "simmetrica": {
-                "min": 0.21,
-                "max": 1.31,
-                "coverage": 94.29
-              },
-              "asimmetrica": {
-                "min": 0.0,
-                "max": 1.0,
-                "coverage": 94.29
-              }
-            }
-          ]
-        }
-      },
-      "3": {
-        "k": 3,
-        "description": "Valori per terne di estratti",
-        "measures": {
-          "values": [
-            {
-              "id": 0,
-              "type": "Totale presenze",
-              "total": "3",
-              "mean": 0.07,
-              "std": 0.26,
-              "skewness": 3.28,
-              "q1": 0.0,
-              "q3": 0.0,
-              "simmetrica": {
-                "min": -0.19,
-                "max": 0.33,
-                "coverage": 92.68
-              },
-              "asimmetrica": {
-                "min": 0.0,
-                "max": 0.0,
-                "coverage": 92.68
-              }
-            },
-            {
-              "id": 1,
-              "type": "Combinazioni con almeno una presenza",
-              "total": "3",
-              "mean": 0.07,
-              "std": 0.26,
-              "skewness": 3.28,
-              "q1": 0.0,
-              "q3": 0.0,
-              "simmetrica": {
-                "min": -0.19,
-                "max": 0.33,
-                "coverage": 92.68
-              },
-              "asimmetrica": {
-                "min": 0.0,
-                "max": 0.0,
-                "coverage": 92.68
-              }
-            },
-            {
-              "id": 2,
-              "type": "Combinazioni senza presenze",
-              "total": "817",
-              "mean": 19.93,
-              "std": 0.26,
-              "skewness": -3.28,
-              "q1": 20.0,
-              "q3": 20.0,
-              "simmetrica": {
-                "min": 19.67,
-                "max": 20.19,
-                "coverage": 92.68
-              },
-              "asimmetrica": {
-                "min": 20.0,
-                "max": 20.0,
-                "coverage": 92.68
-              }
-            },
-            {
-              "id": 3,
-              "type": "Massima frequenza di presenza",
-              "total": "3",
-              "mean": 0.07,
-              "std": 0.26,
-              "skewness": 3.28,
-              "q1": 0.0,
-              "q3": 0.0,
-              "simmetrica": {
-                "min": -0.19,
-                "max": 0.33,
-                "coverage": 92.68
-              },
-              "asimmetrica": {
-                "min": 0.0,
-                "max": 0.0,
-                "coverage": 92.68
-              }
-            }
-          ]
-        }
-      }
-    },
-    "60": {
-      "1": {
-        "k": 1,
-        "description": "Valori per estratto singolo",
-        "measures": {
-          "values": [
-            {
-              "id": 0,
-              "type": "Totale presenze",
-              "total": "973",
-              "mean": 24.32,
-              "std": 3.42,
-              "skewness": 0.17,
-              "q1": 22.0,
-              "q3": 26.25,
-              "simmetrica": {
-                "min": 20.9,
-                "max": 27.74,
-                "coverage": 75.0
-              },
-              "asimmetrica": {
-                "min": 22.0,
-                "max": 26.25,
-                "coverage": 52.5
-              }
-            },
-            {
-              "id": 1,
-              "type": "Combinazioni con almeno una presenza",
-              "total": "237",
-              "mean": 5.92,
-              "std": 0.35,
-              "skewness": -4.79,
-              "q1": 6.0,
-              "q3": 6.0,
-              "simmetrica": {
-                "min": 5.57,
-                "max": 6.27,
-                "coverage": 95.0
-              },
-              "asimmetrica": {
-                "min": 6.0,
-                "max": 6.0,
-                "coverage": 95.0
-              }
-            },
-            {
-              "id": 2,
-              "type": "Combinazioni senza presenze",
-              "total": "3",
-              "mean": 0.08,
-              "std": 0.35,
-              "skewness": 4.79,
-              "q1": 0.0,
-              "q3": 0.0,
-              "simmetrica": {
-                "min": -0.27,
-                "max": 0.43,
-                "coverage": 95.0
-              },
-              "asimmetrica": {
-                "min": 0.0,
-                "max": 0.0,
-                "coverage": 95.0
-              }
-            },
-            {
-              "id": 3,
-              "type": "Massima frequenza di presenza",
-              "total": "260",
-              "mean": 6.5,
-              "std": 1.12,
-              "skewness": -0.21,
-              "q1": 6.0,
-              "q3": 7.0,
-              "simmetrica": {
-                "min": 5.38,
-                "max": 7.62,
-                "coverage": 92.5
-              },
-              "asimmetrica": {
-                "min": 6.0,
-                "max": 7.0,
-                "coverage": 65.0
-              }
-            }
-          ]
-        }
-      },
-      "2": {
-        "k": 2,
-        "description": "Valori per coppie di estratti",
-        "measures": {
-          "values": [
-            {
-              "id": 0,
-              "type": "Totale presenze",
-              "total": "125",
-              "mean": 3.12,
-              "std": 1.98,
-              "skewness": 0.82,
-              "q1": 2.0,
-              "q3": 5.0,
-              "simmetrica": {
-                "min": 1.14,
-                "max": 5.1,
-                "coverage": 85.0
-              },
-              "asimmetrica": {
-                "min": 2.0,
-                "max": 5.0,
-                "coverage": 65.0
-              }
-            },
-            {
-              "id": 1,
-              "type": "Combinazioni con almeno una presenza",
-              "total": "112",
-              "mean": 2.8,
-              "std": 1.81,
-              "skewness": 0.73,
-              "q1": 1.0,
-              "q3": 4.0,
-              "simmetrica": {
-                "min": 0.99,
-                "max": 4.61,
-                "coverage": 87.5
-              },
-              "asimmetrica": {
-                "min": 1.0,
-                "max": 4.0,
-                "coverage": 77.5
-              }
-            },
-            {
-              "id": 2,
-              "type": "Combinazioni senza presenze",
-              "total": "488",
-              "mean": 12.2,
-              "std": 1.81,
-              "skewness": -0.73,
-              "q1": 11.0,
-              "q3": 14.0,
-              "simmetrica": {
-                "min": 10.39,
-                "max": 14.01,
-                "coverage": 87.5
-              },
-              "asimmetrica": {
-                "min": 11.0,
-                "max": 14.0,
-                "coverage": 77.5
-              }
-            },
-            {
-              "id": 3,
-              "type": "Massima frequenza di presenza",
-              "total": "51",
-              "mean": 1.27,
-              "std": 0.5,
-              "skewness": 0.39,
-              "q1": 1.0,
-              "q3": 2.0,
-              "simmetrica": {
-                "min": 0.77,
-                "max": 1.77,
-                "coverage": 97.5
-              },
-              "asimmetrica": {
-                "min": 1.0,
-                "max": 2.0,
-                "coverage": 97.5
-              }
-            }
-          ]
-        }
-      },
-      "3": {
-        "k": 3,
-        "description": "Valori per terne di estratti",
-        "measures": {
-          "values": [
-            {
-              "id": 0,
-              "type": "Totale presenze",
-              "total": "7",
-              "mean": 0.21,
-              "std": 0.47,
-              "skewness": 2.25,
-              "q1": 0.0,
-              "q3": 0.0,
-              "simmetrica": {
-                "min": -0.26,
-                "max": 0.68,
-                "coverage": 97.06
-              },
-              "asimmetrica": {
-                "min": 0.0,
-                "max": 0.0,
-                "coverage": 82.35
-              }
-            },
-            {
-              "id": 1,
-              "type": "Combinazioni con almeno una presenza",
-              "total": "7",
-              "mean": 0.21,
-              "std": 0.47,
-              "skewness": 2.25,
-              "q1": 0.0,
-              "q3": 0.0,
-              "simmetrica": {
-                "min": -0.26,
-                "max": 0.68,
-                "coverage": 97.06
-              },
-              "asimmetrica": {
-                "min": 0.0,
-                "max": 0.0,
-                "coverage": 82.35
-              }
-            },
-            {
-              "id": 2,
-              "type": "Combinazioni senza presenze",
-              "total": "673",
-              "mean": 19.79,
-              "std": 0.47,
-              "skewness": -2.25,
-              "q1": 20.0,
-              "q3": 20.0,
-              "simmetrica": {
-                "min": 19.32,
-                "max": 20.26,
-                "coverage": 97.06
-              },
-              "asimmetrica": {
-                "min": 20.0,
-                "max": 20.0,
-                "coverage": 82.35
-              }
-            },
-            {
-              "id": 3,
-              "type": "Massima frequenza di presenza",
-              "total": "6",
-              "mean": 0.18,
-              "std": 0.38,
-              "skewness": 1.7,
-              "q1": 0.0,
-              "q3": 0.0,
-              "simmetrica": {
-                "min": -0.2,
-                "max": 0.56,
-                "coverage": 100.0
-              },
-              "asimmetrica": {
-                "min": 0.0,
-                "max": 0.0,
-                "coverage": 82.35
-              }
-            }
-          ]
-        }
-      }
-    },
-    "90": {
-      "1": {
-        "k": 1,
-        "description": "Valori per estratto singolo",
-        "measures": {
-          "values": [
-            {
-              "id": 0,
-              "type": "Totale presenze",
-              "total": "356",
-              "mean": 35.6,
-              "std": 2.54,
-              "skewness": -0.21,
-              "q1": 33.25,
-              "q3": 38.0,
-              "simmetrica": {
-                "min": 33.06,
-                "max": 38.14,
-                "coverage": 70.0
-              },
-              "asimmetrica": {
-                "min": 33.25,
-                "max": 38.0,
-                "coverage": 70.0
-              }
-            },
-            {
-              "id": 1,
-              "type": "Combinazioni con almeno una presenza",
-              "total": "60",
-              "mean": 6.0,
-              "std": 0.0,
-              "skewness": NaN,
-              "q1": 6.0,
-              "q3": 6.0,
-              "simmetrica": {
-                "min": 6.0,
-                "max": 6.0,
-                "coverage": 100.0
-              },
-              "asimmetrica": {
-                "min": 6.0,
-                "max": 6.0,
-                "coverage": 100.0
-              }
-            },
-            {
-              "id": 2,
-              "type": "Combinazioni senza presenze",
-              "total": "0",
-              "mean": 0.0,
-              "std": 0.0,
-              "skewness": NaN,
-              "q1": 0.0,
-              "q3": 0.0,
-              "simmetrica": {
-                "min": 0.0,
-                "max": 0.0,
-                "coverage": 100.0
-              },
-              "asimmetrica": {
-                "min": 0.0,
-                "max": 0.0,
-                "coverage": 100.0
-              }
-            },
-            {
-              "id": 3,
-              "type": "Massima frequenza di presenza",
-              "total": "87",
-              "mean": 8.7,
-              "std": 1.1,
-              "skewness": -0.29,
-              "q1": 8.0,
-              "q3": 9.75,
-              "simmetrica": {
-                "min": 7.6,
-                "max": 9.8,
-                "coverage": 80.0
-              },
-              "asimmetrica": {
-                "min": 8.0,
-                "max": 9.75,
-                "coverage": 80.0
-              }
-            }
-          ]
-        }
-      },
-      "2": {
-        "k": 2,
-        "description": "Valori per coppie di estratti",
-        "measures": {
-          "values": [
-            {
-              "id": 0,
-              "type": "Totale presenze",
-              "total": "44",
-              "mean": 4.4,
-              "std": 2.2,
-              "skewness": 0.78,
-              "q1": 3.0,
-              "q3": 5.75,
-              "simmetrica": {
-                "min": 2.2,
-                "max": 6.6,
-                "coverage": 90.0
-              },
-              "asimmetrica": {
-                "min": 3.0,
-                "max": 5.75,
-                "coverage": 60.0
-              }
-            },
-            {
-              "id": 1,
-              "type": "Combinazioni con almeno una presenza",
-              "total": "39",
-              "mean": 3.9,
-              "std": 1.58,
-              "skewness": 0.62,
-              "q1": 3.0,
-              "q3": 4.75,
-              "simmetrica": {
-                "min": 2.32,
-                "max": 5.48,
-                "coverage": 80.0
-              },
-              "asimmetrica": {
-                "min": 3.0,
-                "max": 4.75,
-                "coverage": 60.0
-              }
-            },
-            {
-              "id": 2,
-              "type": "Combinazioni senza presenze",
-              "total": "111",
-              "mean": 11.1,
-              "std": 1.58,
-              "skewness": -0.62,
-              "q1": 10.25,
-              "q3": 12.0,
-              "simmetrica": {
-                "min": 9.52,
-                "max": 12.68,
-                "coverage": 80.0
-              },
-              "asimmetrica": {
-                "min": 10.25,
-                "max": 12.0,
-                "coverage": 60.0
-              }
-            },
-            {
-              "id": 3,
-              "type": "Massima frequenza di presenza",
-              "total": "14",
-              "mean": 1.4,
-              "std": 0.49,
-              "skewness": 0.41,
-              "q1": 1.0,
-              "q3": 2.0,
-              "simmetrica": {
-                "min": 0.91,
-                "max": 1.89,
-                "coverage": 100.0
-              },
-              "asimmetrica": {
-                "min": 1.0,
-                "max": 2.0,
-                "coverage": 100.0
-              }
-            }
-          ]
-        }
-      },
-      "3": {
-        "k": 3,
-        "description": "Valori per terne di estratti",
-        "measures": {
-          "values": [
-            {
-              "id": 0,
-              "type": "Totale presenze",
-              "total": "2",
-              "mean": 0.5,
-              "std": 0.87,
-              "skewness": 1.15,
-              "q1": 0.0,
-              "q3": 0.5,
-              "simmetrica": {
-                "min": -0.37,
-                "max": 1.37,
-                "coverage": 75.0
-              },
-              "asimmetrica": {
-                "min": 0.0,
-                "max": 0.5,
-                "coverage": 75.0
-              }
-            },
-            {
-              "id": 1,
-              "type": "Combinazioni con almeno una presenza",
-              "total": "2",
-              "mean": 0.5,
-              "std": 0.87,
-              "skewness": 1.15,
-              "q1": 0.0,
-              "q3": 0.5,
-              "simmetrica": {
-                "min": -0.37,
-                "max": 1.37,
-                "coverage": 75.0
-              },
-              "asimmetrica": {
-                "min": 0.0,
-                "max": 0.5,
-                "coverage": 75.0
-              }
-            },
-            {
-              "id": 2,
-              "type": "Combinazioni senza presenze",
-              "total": "78",
-              "mean": 19.5,
-              "std": 0.87,
-              "skewness": -1.15,
-              "q1": 19.5,
-              "q3": 20.0,
-              "simmetrica": {
-                "min": 18.63,
-                "max": 20.37,
-                "coverage": 75.0
-              },
-              "asimmetrica": {
-                "min": 19.5,
-                "max": 20.0,
-                "coverage": 75.0
-              }
-            },
-            {
-              "id": 3,
-              "type": "Massima frequenza di presenza",
-              "total": "1",
-              "mean": 0.25,
-              "std": 0.43,
-              "skewness": 1.15,
-              "q1": 0.0,
-              "q3": 0.25,
-              "simmetrica": {
-                "min": -0.18,
-                "max": 0.68,
-                "coverage": 100.0
-              },
-              "asimmetrica": {
-                "min": 0.0,
-                "max": 0.25,
-                "coverage": 75.0
-              }
-            }
-          ]
-        }
-      }
     }
   },
   "sequences": {
@@ -1075,5 +277,95 @@
     "4": 0.0,
     "5": 0.0,
     "6": 27.0
+  },
+  "delays": {
+    "measures": {
+      "values": [
+        {
+          "id": 0,
+          "type": "Ritardo minimo",
+          "min": 2.0,
+          "max": 2.0,
+          "mean": 2.0,
+          "std_dev": 0.0,
+          "skewness": NaN,
+          "q1": 2.0,
+          "q3": 2.0,
+          "simmetrica": {
+            "min": 2.0,
+            "max": 2.0,
+            "coverage": 100.0
+          },
+          "asimmetrica": {
+            "min": 2.0,
+            "max": 2.0,
+            "coverage": 100.0
+          }
+        },
+        {
+          "id": 1,
+          "type": "Ritardo massimo",
+          "min": 47.0,
+          "max": 47.0,
+          "mean": 47.0,
+          "std_dev": 0.0,
+          "skewness": NaN,
+          "q1": 47.0,
+          "q3": 47.0,
+          "simmetrica": {
+            "min": 47.0,
+            "max": 47.0,
+            "coverage": 100.0
+          },
+          "asimmetrica": {
+            "min": 47.0,
+            "max": 47.0,
+            "coverage": 100.0
+          }
+        },
+        {
+          "id": 2,
+          "type": "Ritardo medio",
+          "min": 13.0,
+          "max": 13.0,
+          "mean": 13.0,
+          "std_dev": 0.0,
+          "skewness": NaN,
+          "q1": 13.0,
+          "q3": 13.0,
+          "simmetrica": {
+            "min": 13.0,
+            "max": 13.0,
+            "coverage": 100.0
+          },
+          "asimmetrica": {
+            "min": 13.0,
+            "max": 13.0,
+            "coverage": 100.0
+          }
+        },
+        {
+          "id": 3,
+          "type": "Ritardo totale",
+          "min": 76.0,
+          "max": 76.0,
+          "mean": 76.0,
+          "std_dev": 0.0,
+          "skewness": NaN,
+          "q1": 76.0,
+          "q3": 76.0,
+          "simmetrica": {
+            "min": 76.0,
+            "max": 76.0,
+            "coverage": 100.0
+          },
+          "asimmetrica": {
+            "min": 76.0,
+            "max": 76.0,
+            "coverage": 100.0
+          }
+        }
+      ]
+    }
   }
 }
