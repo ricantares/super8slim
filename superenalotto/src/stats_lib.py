@@ -336,18 +336,78 @@ class SequenceStats:
         Args:
             arr: A list or array of 6 ordered numbers
         """
-        sequences = []
+        ts = []
         for i in range(0,len(history_data)):
             base = history_data[i]
             seq = self.__count_sequences(base)
-            sequences.append(seq)
+            ts.append(seq)
+
             
-        sd = {}
-        tot = np.sum(sequences, axis=0)
-        for i in range(0, len(tot)):
-            sd[i+1] = np.round(tot[i]/len(history_data)*100, 2)
+        mind = np.round(np.min(ts, axis=0), 0)
+        maxd = np.round(np.max(ts, axis=0), 0)
+        print(f"Sequenze totali \n- minimo: {mind} \n- massimo: {maxd}")
+
+        u = np.round(np.mean(ts, axis=0), 0)
+        x = np.round(np.std(ts, axis=0), 0)
+        sk = np.round(stats.skew(ts, axis=0), 2)
+
+        q1 = np.round(np.quantile(ts, 0.25, axis=0), 0)
+        q3 = np.round(np.quantile(ts, 0.75, axis=0), 0)
+
+        #print(f"Sequenze totali \n- media: {u} \n- deviazione standard: {x} \n- skewness: {sk} \n- q1: {q1} \n- q3: {q3}")
+
+        min_bounds_simm = np.round(u - x, 0)
+        max_bounds_simm = np.round(u + x, 0)
+        coverages_simm = np.round((clib.count_values_with_coverage(ts, min_bounds_simm, max_bounds_simm)) * 100, 2)
+        #print(f"Sequenze totali - copertura intervallo media ± deviazione standard: {coverages_simm}%")
+
+        min_bounds_asimm = q1
+        max_bounds_asimm = q3
+        coverages_asimm = np.round((clib.count_values_with_coverage(ts, min_bounds_asimm, max_bounds_asimm)) * 100, 2)
+        #print(f"Sequenze totali - copertura intervallo IQR: {coverages_asimm}%")
+
+        results = {}
+        measures = {}
+        measures['values'] = [{}] * 6
+        for j in range(0, 6):
+            type = ""
+            match j:
+                case 0: type = "Sequenze di 2 numeri consecutivi"
+                case 1: type = "Sequenze di 3 numeri consecutivi"
+                case 2: type = "Sequenze di 4 numeri consecutivi"
+                case 3: type = "Sequenze di 5 numeri consecutivi"
+                case 4: type = "Sequenze di 6 numeri consecutivi"
+                case 5: type = "Totale sequenze di numeri consecutivi"
+            measures['values'][j] = {
+                'id': j,
+                'type': type,
+                'min': mind[j],
+                'max': maxd[j],
+                'mean': u[j],
+                'std_dev': x[j],
+                'skewness': sk[j],
+                'q1': q1[j],
+                'q3': q3[j],
+                'simmetrica': {
+                    'min': min_bounds_simm[j],
+                    'max': max_bounds_simm[j],
+                    'coverage': coverages_simm[j]
+                },
+                'asimmetrica': {
+                    'min': min_bounds_asimm[j],
+                    'max': max_bounds_asimm[j],
+                    'coverage': coverages_asimm[j]
+                }
+            }
+        results['measures'] = measures
+
+        # sd = {}
+        # tot = np.sum(sequences, axis=0)
+        # for i in range(0, len(tot)):
+        #     sd[i+1] = np.round(tot[i]/len(history_data)*100, 2)
             
-        return sd      
+        # return sd      
+        return results
 
     def __count_sequences(self, arr):
         """
@@ -445,12 +505,10 @@ class DelaysStats:
         q1 = np.round(np.quantile(td, 0.25, axis=0), 0)
         q3 = np.round(np.quantile(td, 0.75, axis=0), 0)
 
-        # TODO: aggiungere calcolo copertura
-
         #print(f"Ritardo totale \n- media: {u} \n- deviazione standard: {x} \n- skewness: {sk} \n- q1: {q1} \n- q3: {q3}")
 
-        min_bounds_simm = np.round(u - x, 2)
-        max_bounds_simm = np.round(u + x, 2)
+        min_bounds_simm = np.round(u - x, 0)
+        max_bounds_simm = np.round(u + x, 0)
         coverages_simm = np.round((clib.count_values_with_coverage(td, min_bounds_simm, max_bounds_simm)) * 100, 2)
         #print(f"Ritardo totale - copertura intervallo media ± deviazione standard: {coverages_simm}%")
 
