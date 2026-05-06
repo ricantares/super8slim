@@ -230,11 +230,11 @@ class OccurencesStats:
                 x = np.round(np.std(s, axis=0), 2)
                 sk = np.round(stats.skew(s, axis=0), 2)
                 
-                q1 = np.round(np.quantile(s, 0.25, axis=0), 2)
-                q3 = np.round(np.quantile(s, 0.75, axis=0), 2)
+                q1 = np.round(np.quantile(s, 0.25, axis=0), 0)
+                q3 = np.round(np.quantile(s, 0.75, axis=0), 0)
     
-                min_bounds_simm = np.round(u - x, 2)
-                max_bounds_simm = np.round(u + x, 2)
+                min_bounds_simm = np.round(u - x, 0)
+                max_bounds_simm = np.round(u + x, 0)
                 #coverages_simm = np.round((self.__count_values_with_coverage(s, min_bounds_simm, max_bounds_simm)) * 100, 2)
                 coverages_simm = np.round((clib.count_values_with_coverage(s, min_bounds_simm, max_bounds_simm)) * 100, 2)
 
@@ -345,10 +345,10 @@ class SequenceStats:
             
         mind = np.round(np.min(ts, axis=0), 0)
         maxd = np.round(np.max(ts, axis=0), 0)
-        print(f"Sequenze totali \n- minimo: {mind} \n- massimo: {maxd}")
+        #print(f"Sequenze totali \n- minimo: {mind} \n- massimo: {maxd}")
 
-        u = np.round(np.mean(ts, axis=0), 0)
-        x = np.round(np.std(ts, axis=0), 0)
+        u = np.round(np.mean(ts, axis=0), 2)
+        x = np.round(np.std(ts, axis=0), 2)
         sk = np.round(stats.skew(ts, axis=0), 2)
 
         q1 = np.round(np.quantile(ts, 0.25, axis=0), 0)
