@@ -155,3 +155,14 @@ class CommonLib:
             
         except (TypeError, ValueError, IndexError, OverflowError):
             return result
+
+    def get_forecast(self):
+        """ Get a forecast extraction with the following properties:
+            - range [1, 90]
+            - without duplicates
+            - ordered in ascending order
+        """
+        #logging.debug("Getting forecast extraction")
+        extraction = rnd.sample(range(1, 91), 6)
+        extraction.sort()
+        return np.array(extraction)

@@ -19,8 +19,8 @@
               "q1": 4.0,
               "q3": 7.0,
               "simmetrica": {
-                "min": 3.72,
-                "max": 8.2,
+                "min": 4.0,
+                "max": 8.0,
                 "coverage": 73.22
               },
               "asimmetrica": {
@@ -39,8 +39,8 @@
               "q1": 3.0,
               "q3": 5.0,
               "simmetrica": {
-                "min": 2.7,
-                "max": 5.04,
+                "min": 3.0,
+                "max": 5.0,
                 "coverage": 80.61
               },
               "asimmetrica": {
@@ -59,8 +59,8 @@
               "q1": 1.0,
               "q3": 3.0,
               "simmetrica": {
-                "min": 0.96,
-                "max": 3.3,
+                "min": 1.0,
+                "max": 3.0,
                 "coverage": 80.61
               },
               "asimmetrica": {
@@ -79,8 +79,8 @@
               "q1": 2.0,
               "q3": 3.0,
               "simmetrica": {
-                "min": 1.46,
-                "max": 3.14,
+                "min": 1.0,
+                "max": 3.0,
                 "coverage": 92.43
               },
               "asimmetrica": {
@@ -107,8 +107,8 @@
               "q1": 0.0,
               "q3": 1.0,
               "simmetrica": {
-                "min": -0.2,
-                "max": 1.86,
+                "min": 0.0,
+                "max": 2.0,
                 "coverage": 92.37
               },
               "asimmetrica": {
@@ -127,8 +127,8 @@
               "q1": 0.0,
               "q3": 1.0,
               "simmetrica": {
-                "min": -0.18,
-                "max": 1.8,
+                "min": 0.0,
+                "max": 2.0,
                 "coverage": 92.99
               },
               "asimmetrica": {
@@ -147,8 +147,8 @@
               "q1": 14.0,
               "q3": 15.0,
               "simmetrica": {
-                "min": 13.2,
-                "max": 15.18,
+                "min": 13.0,
+                "max": 15.0,
                 "coverage": 92.99
               },
               "asimmetrica": {
@@ -167,8 +167,8 @@
               "q1": 0.0,
               "q3": 1.0,
               "simmetrica": {
-                "min": 0.01,
-                "max": 1.09,
+                "min": 0.0,
+                "max": 1.0,
                 "coverage": 97.75
               },
               "asimmetrica": {
@@ -195,8 +195,8 @@
               "q1": 0.0,
               "q3": 0.0,
               "simmetrica": {
-                "min": -0.18,
-                "max": 0.28,
+                "min": 0.0,
+                "max": 0.0,
                 "coverage": 95.14
               },
               "asimmetrica": {
@@ -215,8 +215,8 @@
               "q1": 0.0,
               "q3": 0.0,
               "simmetrica": {
-                "min": -0.18,
-                "max": 0.28,
+                "min": 0.0,
+                "max": 0.0,
                 "coverage": 95.14
               },
               "asimmetrica": {
@@ -235,8 +235,8 @@
               "q1": 20.0,
               "q3": 20.0,
               "simmetrica": {
-                "min": 19.72,
-                "max": 20.18,
+                "min": 20.0,
+                "max": 20.0,
                 "coverage": 95.14
               },
               "asimmetrica": {
@@ -255,8 +255,8 @@
               "q1": 0.0,
               "q3": 0.0,
               "simmetrica": {
-                "min": -0.17,
-                "max": 0.27,
+                "min": 0.0,
+                "max": 0.0,
                 "coverage": 95.14
               },
               "asimmetrica": {
@@ -283,8 +283,8 @@
               "q1": 0.0,
               "q3": 0.0,
               "simmetrica": {
-                "min": -0.15,
-                "max": 0.21,
+                "min": 0.0,
+                "max": 0.0,
                 "coverage": 96.77
               },
               "asimmetrica": {
@@ -303,8 +303,8 @@
               "q1": 0.0,
               "q3": 0.0,
               "simmetrica": {
-                "min": -0.15,
-                "max": 0.21,
+                "min": 0.0,
+                "max": 0.0,
                 "coverage": 96.77
               },
               "asimmetrica": {
@@ -323,8 +323,8 @@
               "q1": 15.0,
               "q3": 15.0,
               "simmetrica": {
-                "min": 14.79,
-                "max": 15.15,
+                "min": 15.0,
+                "max": 15.0,
                 "coverage": 96.77
               },
               "asimmetrica": {
@@ -343,8 +343,8 @@
               "q1": 0.0,
               "q3": 0.0,
               "simmetrica": {
-                "min": -0.15,
-                "max": 0.21,
+                "min": 0.0,
+                "max": 0.0,
                 "coverage": 96.77
               },
               "asimmetrica": {
@@ -373,8 +373,8 @@
               "q1": 10.0,
               "q3": 14.0,
               "simmetrica": {
-                "min": 8.72,
-                "max": 15.14,
+                "min": 9.0,
+                "max": 15.0,
                 "coverage": 72.57
               },
               "asimmetrica": {
@@ -393,8 +393,8 @@
               "q1": 5.0,
               "q3": 6.0,
               "simmetrica": {
-                "min": 4.44,
-                "max": 6.04,
+                "min": 4.0,
+                "max": 6.0,
                 "coverage": 97.58
               },
               "asimmetrica": {
@@ -413,8 +413,8 @@
               "q1": 0.0,
               "q3": 1.0,
               "simmetrica": {
-                "min": -0.04,
-                "max": 1.56,
+                "min": 0.0,
+                "max": 2.0,
                 "coverage": 97.58
               },
               "asimmetrica": {
@@ -433,8 +433,8 @@
               "q1": 3.0,
               "q3": 4.0,
               "simmetrica": {
-                "min": 2.71,
-                "max": 4.87,
+                "min": 3.0,
+                "max": 5.0,
                 "coverage": 84.05
               },
               "asimmetrica": {
@@ -461,8 +461,8 @@
               "q1": 1.0,
               "q3": 2.0,
               "simmetrica": {
-                "min": 0.21,
-                "max": 3.15,
+                "min": 0.0,
+                "max": 3.0,
                 "coverage": 88.89
               },
               "asimmetrica": {
@@ -481,8 +481,8 @@
               "q1": 1.0,
               "q3": 2.0,
               "simmetrica": {
-                "min": 0.25,
-                "max": 2.91,
+                "min": 0.0,
+                "max": 3.0,
                 "coverage": 91.0
               },
               "asimmetrica": {
@@ -501,8 +501,8 @@
               "q1": 13.0,
               "q3": 14.0,
               "simmetrica": {
-                "min": 12.09,
-                "max": 14.75,
+                "min": 12.0,
+                "max": 15.0,
                 "coverage": 91.0
               },
               "asimmetrica": {
@@ -521,8 +521,8 @@
               "q1": 1.0,
               "q3": 1.0,
               "simmetrica": {
-                "min": 0.33,
-                "max": 1.43,
+                "min": 0.0,
+                "max": 1.0,
                 "coverage": 91.31
               },
               "asimmetrica": {
@@ -549,8 +549,8 @@
               "q1": 0.0,
               "q3": 0.0,
               "simmetrica": {
-                "min": -0.24,
-                "max": 0.44,
+                "min": 0.0,
+                "max": 0.0,
                 "coverage": 90.8
               },
               "asimmetrica": {
@@ -569,8 +569,8 @@
               "q1": 0.0,
               "q3": 0.0,
               "simmetrica": {
-                "min": -0.24,
-                "max": 0.44,
+                "min": 0.0,
+                "max": 0.0,
                 "coverage": 90.8
               },
               "asimmetrica": {
@@ -589,8 +589,8 @@
               "q1": 20.0,
               "q3": 20.0,
               "simmetrica": {
-                "min": 19.56,
-                "max": 20.24,
+                "min": 20.0,
+                "max": 20.0,
                 "coverage": 90.8
               },
               "asimmetrica": {
@@ -609,8 +609,8 @@
               "q1": 0.0,
               "q3": 0.0,
               "simmetrica": {
-                "min": -0.2,
-                "max": 0.38,
+                "min": 0.0,
+                "max": 0.0,
                 "coverage": 90.8
               },
               "asimmetrica": {
@@ -637,8 +637,8 @@
               "q1": 0.0,
               "q3": 0.0,
               "simmetrica": {
-                "min": -0.04,
-                "max": 0.04,
+                "min": 0.0,
+                "max": 0.0,
                 "coverage": 99.83
               },
               "asimmetrica": {
@@ -657,8 +657,8 @@
               "q1": 0.0,
               "q3": 0.0,
               "simmetrica": {
-                "min": -0.04,
-                "max": 0.04,
+                "min": 0.0,
+                "max": 0.0,
                 "coverage": 99.83
               },
               "asimmetrica": {
@@ -677,8 +677,8 @@
               "q1": 15.0,
               "q3": 15.0,
               "simmetrica": {
-                "min": 14.96,
-                "max": 15.04,
+                "min": 15.0,
+                "max": 15.0,
                 "coverage": 99.83
               },
               "asimmetrica": {
@@ -697,8 +697,8 @@
               "q1": 0.0,
               "q3": 0.0,
               "simmetrica": {
-                "min": -0.04,
-                "max": 0.04,
+                "min": 0.0,
+                "max": 0.0,
                 "coverage": 99.83
               },
               "asimmetrica": {
@@ -727,8 +727,8 @@
               "q1": 21.0,
               "q3": 27.0,
               "simmetrica": {
-                "min": 19.46,
-                "max": 28.44,
+                "min": 19.0,
+                "max": 28.0,
                 "coverage": 73.44
               },
               "asimmetrica": {
@@ -747,8 +747,8 @@
               "q1": 6.0,
               "q3": 6.0,
               "simmetrica": {
-                "min": 5.61,
-                "max": 6.21,
+                "min": 6.0,
+                "max": 6.0,
                 "coverage": 91.23
               },
               "asimmetrica": {
@@ -767,8 +767,8 @@
               "q1": 0.0,
               "q3": 0.0,
               "simmetrica": {
-                "min": -0.21,
-                "max": 0.39,
+                "min": 0.0,
+                "max": 0.0,
                 "coverage": 91.23
               },
               "asimmetrica": {
@@ -787,8 +787,8 @@
               "q1": 6.0,
               "q3": 7.0,
               "simmetrica": {
-                "min": 5.07,
-                "max": 7.97,
+                "min": 5.0,
+                "max": 8.0,
                 "coverage": 85.41
               },
               "asimmetrica": {
@@ -815,8 +815,8 @@
               "q1": 2.0,
               "q3": 5.0,
               "simmetrica": {
-                "min": 1.31,
-                "max": 5.39,
+                "min": 1.0,
+                "max": 5.0,
                 "coverage": 81.18
               },
               "asimmetrica": {
@@ -835,8 +835,8 @@
               "q1": 2.0,
               "q3": 4.0,
               "simmetrica": {
-                "min": 1.3,
-                "max": 4.68,
+                "min": 1.0,
+                "max": 5.0,
                 "coverage": 87.16
               },
               "asimmetrica": {
@@ -855,8 +855,8 @@
               "q1": 11.0,
               "q3": 13.0,
               "simmetrica": {
-                "min": 10.32,
-                "max": 13.7,
+                "min": 10.0,
+                "max": 14.0,
                 "coverage": 87.16
               },
               "asimmetrica": {
@@ -875,8 +875,8 @@
               "q1": 1.0,
               "q3": 2.0,
               "simmetrica": {
-                "min": 0.69,
-                "max": 1.83,
+                "min": 1.0,
+                "max": 2.0,
                 "coverage": 93.61
               },
               "asimmetrica": {
@@ -903,8 +903,8 @@
               "q1": 0.0,
               "q3": 0.0,
               "simmetrica": {
-                "min": -0.27,
-                "max": 0.67,
+                "min": 0.0,
+                "max": 1.0,
                 "coverage": 98.53
               },
               "asimmetrica": {
@@ -923,8 +923,8 @@
               "q1": 0.0,
               "q3": 0.0,
               "simmetrica": {
-                "min": -0.27,
-                "max": 0.65,
+                "min": 0.0,
+                "max": 1.0,
                 "coverage": 98.59
               },
               "asimmetrica": {
@@ -943,8 +943,8 @@
               "q1": 20.0,
               "q3": 20.0,
               "simmetrica": {
-                "min": 19.35,
-                "max": 20.27,
+                "min": 19.0,
+                "max": 20.0,
                 "coverage": 98.59
               },
               "asimmetrica": {
@@ -963,8 +963,8 @@
               "q1": 0.0,
               "q3": 0.0,
               "simmetrica": {
-                "min": -0.2,
-                "max": 0.56,
+                "min": 0.0,
+                "max": 1.0,
                 "coverage": 99.87
               },
               "asimmetrica": {
@@ -991,8 +991,8 @@
               "q1": 0.0,
               "q3": 0.0,
               "simmetrica": {
-                "min": -0.06,
-                "max": 0.06,
+                "min": 0.0,
+                "max": 0.0,
                 "coverage": 99.69
               },
               "asimmetrica": {
@@ -1011,8 +1011,8 @@
               "q1": 0.0,
               "q3": 0.0,
               "simmetrica": {
-                "min": -0.06,
-                "max": 0.06,
+                "min": 0.0,
+                "max": 0.0,
                 "coverage": 99.69
               },
               "asimmetrica": {
@@ -1031,8 +1031,8 @@
               "q1": 15.0,
               "q3": 15.0,
               "simmetrica": {
-                "min": 14.94,
-                "max": 15.06,
+                "min": 15.0,
+                "max": 15.0,
                 "coverage": 99.69
               },
               "asimmetrica": {
@@ -1051,8 +1051,8 @@
               "q1": 0.0,
               "q3": 0.0,
               "simmetrica": {
-                "min": -0.06,
-                "max": 0.06,
+                "min": 0.0,
+                "max": 0.0,
                 "coverage": 99.69
               },
               "asimmetrica": {
@@ -1081,8 +1081,8 @@
               "q1": 32.0,
               "q3": 40.0,
               "simmetrica": {
-                "min": 30.33,
-                "max": 41.59,
+                "min": 30.0,
+                "max": 42.0,
                 "coverage": 75.56
               },
               "asimmetrica": {
@@ -1101,8 +1101,8 @@
               "q1": 6.0,
               "q3": 6.0,
               "simmetrica": {
-                "min": 5.88,
-                "max": 6.1,
+                "min": 6.0,
+                "max": 6.0,
                 "coverage": 98.7
               },
               "asimmetrica": {
@@ -1121,8 +1121,8 @@
               "q1": 0.0,
               "q3": 0.0,
               "simmetrica": {
-                "min": -0.1,
-                "max": 0.12,
+                "min": 0.0,
+                "max": 0.0,
                 "coverage": 98.7
               },
               "asimmetrica": {
@@ -1141,8 +1141,8 @@
               "q1": 8.0,
               "q3": 10.0,
               "simmetrica": {
-                "min": 7.29,
-                "max": 10.89,
+                "min": 7.0,
+                "max": 11.0,
                 "coverage": 85.8
               },
               "asimmetrica": {
@@ -1169,8 +1169,8 @@
               "q1": 3.0,
               "q3": 7.0,
               "simmetrica": {
-                "min": 2.48,
-                "max": 7.54,
+                "min": 2.0,
+                "max": 8.0,
                 "coverage": 85.61
               },
               "asimmetrica": {
@@ -1189,8 +1189,8 @@
               "q1": 3.0,
               "q3": 6.0,
               "simmetrica": {
-                "min": 2.33,
-                "max": 6.21,
+                "min": 2.0,
+                "max": 6.0,
                 "coverage": 81.19
               },
               "asimmetrica": {
@@ -1209,8 +1209,8 @@
               "q1": 9.0,
               "q3": 12.0,
               "simmetrica": {
-                "min": 8.79,
-                "max": 12.67,
+                "min": 9.0,
+                "max": 13.0,
                 "coverage": 81.19
               },
               "asimmetrica": {
@@ -1229,8 +1229,8 @@
               "q1": 1.0,
               "q3": 2.0,
               "simmetrica": {
-                "min": 0.88,
-                "max": 2.2,
+                "min": 1.0,
+                "max": 2.0,
                 "coverage": 92.13
               },
               "asimmetrica": {
@@ -1257,8 +1257,8 @@
               "q1": 0.0,
               "q3": 0.0,
               "simmetrica": {
-                "min": -0.3,
-                "max": 0.9,
+                "min": 0.0,
+                "max": 1.0,
                 "coverage": 96.39
               },
               "asimmetrica": {
@@ -1277,8 +1277,8 @@
               "q1": 0.0,
               "q3": 0.0,
               "simmetrica": {
-                "min": -0.3,
-                "max": 0.88,
+                "min": 0.0,
+                "max": 1.0,
                 "coverage": 96.48
               },
               "asimmetrica": {
@@ -1297,8 +1297,8 @@
               "q1": 20.0,
               "q3": 20.0,
               "simmetrica": {
-                "min": 19.12,
-                "max": 20.3,
+                "min": 19.0,
+                "max": 20.0,
                 "coverage": 96.48
               },
               "asimmetrica": {
@@ -1317,8 +1317,8 @@
               "q1": 0.0,
               "q3": 0.0,
               "simmetrica": {
-                "min": -0.19,
-                "max": 0.69,
+                "min": 0.0,
+                "max": 1.0,
                 "coverage": 99.81
               },
               "asimmetrica": {
@@ -1345,8 +1345,8 @@
               "q1": 0.0,
               "q3": 0.0,
               "simmetrica": {
-                "min": -0.07,
-                "max": 0.09,
+                "min": 0.0,
+                "max": 0.0,
                 "coverage": 99.38
               },
               "asimmetrica": {
@@ -1365,8 +1365,8 @@
               "q1": 0.0,
               "q3": 0.0,
               "simmetrica": {
-                "min": -0.07,
-                "max": 0.09,
+                "min": 0.0,
+                "max": 0.0,
                 "coverage": 99.38
               },
               "asimmetrica": {
@@ -1385,8 +1385,8 @@
               "q1": 15.0,
               "q3": 15.0,
               "simmetrica": {
-                "min": 14.91,
-                "max": 15.07,
+                "min": 15.0,
+                "max": 15.0,
                 "coverage": 99.38
               },
               "asimmetrica": {
@@ -1405,8 +1405,8 @@
               "q1": 0.0,
               "q3": 0.0,
               "simmetrica": {
-                "min": -0.07,
-                "max": 0.09,
+                "min": 0.0,
+                "max": 0.0,
                 "coverage": 99.38
               },
               "asimmetrica": {
