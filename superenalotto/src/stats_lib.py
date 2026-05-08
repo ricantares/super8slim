@@ -409,7 +409,7 @@ class SequenceStats:
         # return sd      
         return results
 
-    def __count_sequences(self, arr):
+    def count_sequences(self, arr):
         """
         Given an ordered array of 6 numbers, find all maximal consecutive sequences
         and return an array where:
