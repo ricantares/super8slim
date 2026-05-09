@@ -457,13 +457,12 @@ class DelaysStats:
         """Create a new DelaysStats analyzer."""
         pass
     
-    # Methods for delay analysis would go here
-    def __base_delays(self, base, sample):
+    def count_delays(self, base, sample):
  
-        size = len(sample)
+        sample_size = len(sample)
         delays = np.zeros(6, dtype=int)
         done = np.zeros(6, dtype=int)
-        for i in range(size):
+        for i in range(sample_size):
             if 0 in done:
                 for j in range(6):
                     if done[j] == 0 and base[j] not in sample[i]: delays[j] += 1
@@ -474,7 +473,7 @@ class DelaysStats:
     
     def get_delays_dict(self, history_data):
         td = []
-        hyp_max_delay = 200 # Valore ipotetico di ritardo massimo per la simulazione
+        hyp_max_delay = clib.get_hypothetic_max_delay()
         if len(history_data) < hyp_max_delay:
             #print(f"Warning: historical data has only {len(history_data)} entries, which is less than the hypothetical max delay of {hyp_max_delay}. Adjusting max delay to {len(history_data) - 1}.")
             logging.warning(f"Historical data has only {len(history_data)} entries, which is less than the hypothetical max delay of {hyp_max_delay}. Adjusting max delay to {len(history_data) - 1}.")
@@ -482,8 +481,8 @@ class DelaysStats:
         for i in range(len(history_data) - hyp_max_delay):  
             #print(f"Estrazione {i+1}: {history_data[i]}")
             base = history_data[i]  # Prendi l'ultima estrazione come base per il calcolo dei ritardi
-            sample_data = history_data[i+1:i+hyp_max_delay]  # Prendi le prime 100 estrazioni per il campione   
-            delays = self.__base_delays(base, sample_data)
+            sample_data = history_data[i+1:i+hyp_max_delay]  # Prendi le prime hyp_max_delay estrazioni per il campione   
+            delays = self.count_delays(base, sample_data)
 
             #print(f"Ritardi: {np.sort(delays)}")
             min_delay = np.min(delays)

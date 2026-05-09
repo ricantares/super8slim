@@ -166,3 +166,7 @@ class CommonLib:
         extraction = rnd.sample(range(1, 91), 6)
         extraction.sort()
         return np.array(extraction)
+    
+    def get_hypothetic_max_delay(self):
+        return 200 # Valore ipotetico di ritardo massimo per la simulazione
+    
