@@ -6,6 +6,7 @@ from common_lib import CommonLib
 from stats_lib import OccurencesStats
 from stats_lib import SequenceStats
 from stats_lib import DelaysStats
+from stats_lib import BoundsStats
 
 class Collector:
     """Collector for SuperEnalotto draw data.
@@ -58,13 +59,17 @@ class Collector:
         sequences = sstats.get_sequence_dict(history_data)
         return sequences
     
-    
     def collect_delays(self, history_data):
         """Collect delay statistics from draw data."""
         dstats = DelaysStats()
         delays = dstats.get_delays_dict(history_data)
         return delays
-
+    
+    def collect_bounds(self, history_data):
+        """Collect bound statistics from draw data."""
+        bstats = BoundsStats()
+        bounds = bstats.get_bounds_dict(history_data)
+        return bounds
 
 # Run as script
 if __name__ == "__main__":
@@ -120,19 +125,19 @@ if __name__ == "__main__":
         collector = Collector(args.input_file, args.history_size, sample_size)
         print(f"Collector initialized with: data_file={args.input_file}, history_size={args.history_size}, sample_size={sample_size}")
         logging.info(f"Collector initialized with: data_file={args.input_file}, history_size={args.history_size}, sample_size={sample_size}")
-        
-        # Run occurrences collection
-        print(f"\nRunning occurrences collection...")
-        logging.info(f"Running occurrences collection...")
-                
+                        
         # Get historical data
         history_data = collector.collect_data()
         
+        # Initialize output file
         results = {}
         results["origine_dati"] = args.input_file
         results["ultima_estrazione"] = collector.last_extraction_date
         results["elementi_storico"] = len(history_data)
         
+        # Run occurrences collection
+        print(f"\nRunning occurrences collection...")
+        logging.info(f"Running occurrences collection...")
         results["occurrences"] = {}
         if sample_size is None:  # If 'all' was selected, we will compute for all standard sample sizes
             all_sample_sizes = [15, 30, 60, 90]
@@ -142,8 +147,7 @@ if __name__ == "__main__":
             results["occurrences"][sample_size] = collector.collect_occurrences(history_data, sample_size)
         print(f"\nOccurrences collected...")
         logging.info(f"Occurrences collected for sample size: {args.sample_size}")
-        
-        
+                
         # Run sequences collection
         print(f"\nRunning sequences collection...")
         logging.info(f"Running sequences collection...")
@@ -157,7 +161,14 @@ if __name__ == "__main__":
         results["delays"] = collector.collect_delays(history_data)
         print(f"\nDelays collected...")
         logging.info(f"Delays collected")
-        
+                
+        # Run bounds collection
+        print(f"\nRunning bounds collection...")
+        logging.info(f"Running bounds collection...")
+        results["bounds"] = collector.collect_bounds(history_data)
+        print(f"\nBounds collected...")
+        logging.info(f"Bounds collected")
+                
         # Save results
         with open(args.output, 'w') as f:
             json.dump(results, f, indent=2, default=str)

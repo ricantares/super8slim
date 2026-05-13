@@ -339,7 +339,7 @@ class SequenceStats:
         ts = []
         for i in range(0,len(history_data)):
             base = history_data[i]
-            seq = self.__count_sequences(base)
+            seq = self.count_sequences(base)
             ts.append(seq)
 
             
@@ -550,4 +550,78 @@ class DelaysStats:
             }
         results['measures'] = measures
         #print(results)
+        return results
+    
+class BoundsStats:
+    """
+    Statistical analysis for bounds (i.e. min/max values) of each column in SuperEnalotto draws.
+    
+    Analyzes the min/max values of each column across historical draws, providing insights into
+    patterns of appearance and absence.
+    """
+    
+    def __init__(self):
+        """Create a new BoundsStats analyzer."""
+        pass        
+    
+    def get_bounds_dict(self, history_data):
+        minb = np.round(np.min(history_data, axis=0), 0)
+        maxb = np.round(np.max(history_data, axis=0), 0)
+        #print(f"Bounds \n- minimo: {minb} \n- massimo: {maxb}")
+
+        u = np.round(np.mean(history_data, axis=0), 0)
+        x = np.round(np.std(history_data, axis=0), 0)
+        sk = np.round(stats.skew(history_data, axis=0), 2)
+
+        q1 = np.round(np.quantile(history_data, 0.25, axis=0), 0)
+        q3 = np.round(np.quantile(history_data, 0.75, axis=0), 0)
+
+        #print(f"Bounds \n- media: {u} \n- deviazione standard: {x} \n- skewness: {sk} \n- q1: {q1} \n- q3: {q3}")
+
+        min_bounds_simm = np.round(u - x, 0)
+        max_bounds_simm = np.round(u + x, 0)
+        coverages_simm = np.round((clib.count_values_with_coverage(history_data, min_bounds_simm, max_bounds_simm)) * 100, 2)
+        #print(f"Bounds - copertura intervallo media ± deviazione standard: {coverages_simm}%")
+
+        min_bounds_asimm = q1
+        max_bounds_asimm = q3
+        coverages_asimm = np.round((clib.count_values_with_coverage(history_data, min_bounds_asimm, max_bounds_asimm)) * 100, 2)
+        #print(f"Bounds - copertura intervallo IQR: {coverages_asimm}%")
+
+        results = {}
+        results['description'] = "Bounds"
+        measures = {}
+        measures['values'] = [{}] * 4
+        for j in range(0, 4):
+            type = ""
+            match j:
+                case 0: type = "Bounds primo estratto"
+                case 1: type = "Bounds secondo estratto"
+                case 2: type = "Bounds terzo estratto"
+                case 3: type = "Bounds quarto estratto"
+                case 4: type = "Bounds quinto estratto"
+                case 5: type = "Bounds sesto estratto"
+            measures['values'][j] = {
+                'id': j,
+                'type': type,
+                'min': minb[j],
+                'max': maxb[j],
+                'mean': u[j],
+                'std_dev': x[j],
+                'skewness': sk[j],
+                'q1': q1[j],
+                'q3': q3[j],
+                'simmetrica': {
+                    'min': min_bounds_simm[j],
+                    'max': max_bounds_simm[j],
+                    'coverage': coverages_simm[j]
+                },
+                'asimmetrica': {
+                    'min': min_bounds_asimm[j],
+                    'max': max_bounds_asimm[j],
+                    'coverage': coverages_asimm[j]
+                }
+            }
+        results['measures'] = measures
+    
         return results
