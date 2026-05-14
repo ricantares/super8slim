@@ -10,6 +10,7 @@ from common_lib import CommonLib
 from stats_lib import OccurencesStats
 from stats_lib import SequenceStats
 from stats_lib import DelaysStats
+from stats_lib import BoundsStats
 
 class Forecast:
     """Collector for SuperEnalotto draw data.
@@ -138,19 +139,6 @@ class Forecast:
         return attempts
 
     def collect_attempts_within_occurrences(self, attempts, history_data, limits, single_combination_occurrences):
-        # good_attempts = [[]] * len(attempts)
-        # j = 0 # Index for good attempts
-        # for i in range(len(attempts)):
-        #     print(f"Checking attempt {i+1}/{len(attempts)}", end="\r")
-        #     base = attempts[i]
-        #     # print("pippo ", base)
-        #     base_combinations = [list(combinations(base, k)) for k in range(1,7)]
-        #     waste, log_waste = self.check_occurrences(base_combinations, history_data, limits, single_combination_occurrences)
-        #     if not waste:
-        #         good_attempts[j] = base
-        #         j += 1
-                
-        # return [row for row in good_attempts if len(row) > 0]
         
         good_attempt = [] * len(attempts)
         base_combinations = [list(combinations(attempts, k)) for k in range(1,7)]
@@ -219,17 +207,7 @@ class Forecast:
         return False, {} # All measures are within the bounds (i.e. no waste)
 
     def collect_attempts_within_sequences(self, attempts, limits, count_sequences):
-        # good_attempts = [[]] * len(attempts)
-        # j = 0 # Index for good attempts
-        # for i in range(len(attempts)):
-        #     print(f"Checking attempt {i+1}/{len(attempts)}", end="\r")
-        #     base = attempts[i]
-        #     waste, log_waste = self.check_sequences(base, limits, count_sequences(base))
-        #     if not waste:
-        #         good_attempts[j] = base
-        #         j += 1
-                
-        # return [row for row in good_attempts if len(row) > 0]
+
         base = attempts
         waste, log_waste = self.check_sequences(base, limits, count_sequences(base))
         if not waste:
@@ -295,29 +273,15 @@ class Forecast:
                 return True, {"Measure": id, "Bounds": {"min": b.get('min'), "max": b.get('max'), "current": t}} # Log the first measure that is outside the bounds
                     
         return False, {} # All measures are within the bounds (i.e. no waste)
-
-    # def collect_attempts_within_delays(self, attempts, sample, limits, count_delays):
-    #     good_attempts = [[]] * len(attempts)
-    #     j = 0 # Index for good attempts
-    #     for i in range(len(attempts)):
-    #         print(f"Checking attempt {i+1}/{len(attempts)}", end="\r")
-    #         base = attempts[i]
-    #         waste, log_waste = self.check_delays(base, sample, limits, count_delays(base, sample))
-    #         if not waste:
-    #             good_attempts[j] = base
-    #             j += 1
-                
-    #     return [row for row in good_attempts if len(row) > 0]
     
-    def collect_attempts_within_delays(self, sample, d_limits, dstats):
-        bounds = np.asarray(sample).max(axis=0, keepdims=True)[0] # valori massimi di ogni colonna di estratti
-        # TODO operare sui massimi di estrazione con gli stessi metodi di calcolo delle altre misure (i.e. valori statistici)
+    def collect_attempts_within_delays(self, sample, d_limits, b_limits, dstats):
+        #print("Collecting attempts within delays limits...", b_limits)
         wasted = 0
         attempts = [] * 6
         valid = False
         while not valid:
             attempts = [] * 6
-            self.find_attempts(0, bounds, attempts, sample, d_limits)
+            self.find_attempts(0, b_limits, attempts, sample, d_limits)
             #print("Pronostico: ", attempts)
             valid = self.validate_attempts(attempts, d_limits, sample, dstats)
             if not valid: 
@@ -329,17 +293,17 @@ class Forecast:
                 
         return wasted, attempts
 
-    def find_attempts(self, idx_a, bounds, attempts, history_data, delays):
+    def find_attempts(self, idx_a, b_limits, attempts, sample, delays):
         if idx_a < 6:
             valid = False
             # search for valid attempt
             #print("ricerca pronostico: ", idx_a)
             while not valid:
-                amin, amax = self.get_limits(idx_a, bounds, attempts, delays)
+                amin, amax = self.get_limits(idx_a, b_limits, attempts)
                 #print("limiti: ", amin, amax)
                 attempt = rnd.randint(amin, amax)
                 #print("prova: ", attempt)
-                d = self.count_single_delay(attempt, history_data) 
+                d = self.count_single_delay(attempt, sample) 
                 # d[0] must be within min of minimum delays and max of maximum delays #
                 d_min = delays.get("bounds")[0].get("min")
                 d_max = delays.get("bounds")[1].get("max")
@@ -348,7 +312,7 @@ class Forecast:
                     attempts.append(attempt)
                     # Next attempt
                     idx_a += 1
-                    self.find_attempts(idx_a, bounds, attempts, history_data, delays)
+                    self.find_attempts(idx_a, b_limits, attempts, sample, delays)
                     # valid attempt, break retry
                     break
                 # retry attempt 
@@ -367,9 +331,13 @@ class Forecast:
         
         return delay
                 
-    def get_limits(self, idx_a, bounds, attempts, delays):
+    def get_limits(self, idx_a, b_limits, attempts):
+        # print("***********")
+        # print("idx_a: ", idx_a)
+        # print("b_limits: ", b_limits)
+        # print("***********")
         amin = attempts[idx_a - 1] + 1 if idx_a > 0 else 1
-        amax = bounds[idx_a]
+        amax = b_limits[idx_a]
         return amin, amax
         
     def validate_attempts(self, attempts, delays, history_data, dstats):
@@ -377,12 +345,64 @@ class Forecast:
         dd = [min(d), max(d), np.round(np.mean(d), 0), np.sum(d)]
         #print("d  ", d)
         #print("dd ", dd)
-        tr = ["ritardo minimo", "ritardo massimo", "ritardo medio", "ritardo totale"]
+        #tr = ["ritardo minimo", "ritardo massimo", "ritardo medio", "ritardo totale"]
         for k in range(4):
             if dd[k] < delays.get("bounds")[k].get("min") or delays.get("bounds")[k].get("max") < dd[k]:
                 #print(f"pronostico non valido - {tr[k]} {dd[k]} fuori limiti {delays.get("bounds")[k].get("min")}:{delays.get("bounds")[k].get("max")}")
                 return False
         return True
+
+    def get_bounds_stats(self, evidenze):
+        values = evidenze.get('bounds', {}).get('measures', {}).get('values')
+        #print("tot values: ", len(values))
+        
+        b_limit = {}
+        b_limit["bounds"] = [{}] * len(values) 
+        for value in values: 
+            m_id = value.get("id", "")
+            m_type = value.get("type", "")
+            m_mean = value.get("mean", [])
+            m_std = value.get("std", [])
+            m_skew = value.get("skewness", [])
+            m_q1 = value.get("q1", [])
+            m_q3 = value.get("q3", [])
+
+            simm = value.get("simmetrica", {})
+            asimm = value.get("asimmetrica", {})
+                    
+            bounds = {}
+            t = abs(m_skew)
+            match t:
+                case t if t < 0.5:
+                    #print(f"simmetrica   {t}: min={simm.get('min')}, max={simm.get('max')}, coverage={simm.get('coverage')}%")
+                    bounds = {"id": m_id, "min": simm.get('min'), "max": simm.get('max')}
+                case t if t > 1.0:
+                    #print(f"asimmetrica  {t}: min={asimm.get('min')}, max={asimm.get('max')}, coverage={asimm.get('coverage')}%")
+                    bounds = {"id": m_id, "min": asimm.get('min'), "max": asimm.get('max')}
+                case _:
+                    if simm.get('coverage') >= asimm.get('coverage'):
+                        bounds = {"id": m_id, "min": simm.get('min'), "max": simm.get('max')}
+                        #print(f"simmetrica   {t}: min={simm.get('min')}, max={simm.get('max')}, coverage={simm.get('coverage')}%")
+                    else:
+                        #print(f"asimmetrica  {t}: min={asimm.get('min')}, max={asimm.get('max')}, coverage={asimm.get('coverage')}%")
+                        bounds = {"id": m_id, "min": asimm.get('min'), "max": asimm.get('max')}
+            
+            #print(f"    bounds {m_id}  : min={bounds.get('min')}, max={bounds.get('max')}")
+            b_limit["bounds"][int(m_id)] = bounds
+            #print("b_limit: ", m_id, " ", b_limit)
+                
+        return b_limit
+    
+    def get_max_bounds(self, evidenze):
+        b_limits = self.get_bounds_stats(evidenze)
+        max_bounds = [0] * 6
+        for b in b_limits.get("bounds", []):
+            id = int(b.get("id"))
+            if id < 5:
+                max_bounds[id] = int(b.get("max"))
+        max_bounds[5] = 90
+        
+        return max_bounds
 
 ###################################################################################################################################################################################
     
@@ -462,7 +482,9 @@ if __name__ == "__main__":
         o_limits = forecast.get_occurrences_stats(evidenze)
         s_limits = forecast.get_sequences_stats(evidenze)
         d_limits = forecast.get_delays_stats(evidenze)
-     
+        b_limits = forecast.get_max_bounds(evidenze)
+        print(b_limits)
+        
         total_attempts = args.forecast_number
         collected_attempts = [[] * 6] * total_attempts
                     
@@ -471,7 +493,7 @@ if __name__ == "__main__":
         while ia < total_attempts and isafe < 1000:
             print("\nChecking attempts within delays", end=" ")
             # Loop until a valid attempt found
-            wasted, attempts = forecast.collect_attempts_within_delays(history_data, d_limits, dstats)
+            wasted, attempts = forecast.collect_attempts_within_delays(history_data, d_limits, b_limits, dstats)
             print("Passed: ", attempts, " - discarded: ", wasted)
                             
             print("Checking attempts within occurrences", end=" ")

@@ -497,8 +497,8 @@ class DelaysStats:
         maxd = np.round(np.max(td, axis=0), 0)
         #print(f"Ritardo totale \n- minimo: {mind} \n- massimo: {maxd}")
 
-        u = np.round(np.mean(td, axis=0), 0)
-        x = np.round(np.std(td, axis=0), 0)
+        u = np.round(np.mean(td, axis=0), 2)
+        x = np.round(np.std(td, axis=0), 2)
         sk = np.round(stats.skew(td, axis=0), 2)
 
         q1 = np.round(np.quantile(td, 0.25, axis=0), 0)
@@ -569,8 +569,8 @@ class BoundsStats:
         maxb = np.round(np.max(history_data, axis=0), 0)
         #print(f"Bounds \n- minimo: {minb} \n- massimo: {maxb}")
 
-        u = np.round(np.mean(history_data, axis=0), 0)
-        x = np.round(np.std(history_data, axis=0), 0)
+        u = np.round(np.mean(history_data, axis=0), 2)
+        x = np.round(np.std(history_data, axis=0), 2)
         sk = np.round(stats.skew(history_data, axis=0), 2)
 
         q1 = np.round(np.quantile(history_data, 0.25, axis=0), 0)
@@ -591,8 +591,8 @@ class BoundsStats:
         results = {}
         results['description'] = "Bounds"
         measures = {}
-        measures['values'] = [{}] * 4
-        for j in range(0, 4):
+        measures['values'] = [{}] * 6
+        for j in range(0, 6):
             type = ""
             match j:
                 case 0: type = "Bounds primo estratto"
