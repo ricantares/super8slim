@@ -589,7 +589,7 @@ class BoundsStats:
         #print(f"Bounds - copertura intervallo IQR: {coverages_asimm}%")
 
         results = {}
-        results['description'] = "Bounds"
+        #results['description'] = "Bounds"
         measures = {}
         measures['values'] = [{}] * 6
         for j in range(0, 6):
@@ -624,4 +624,72 @@ class BoundsStats:
             }
         results['measures'] = measures
     
+        return results
+    
+class RowSumStats:
+    """
+    Statistical analysis for row sums in SuperEnalotto draws.
+    
+    Analyzes the sum of each row across historical draws, providing insights into
+    patterns of appearance and absence.
+    """
+    
+    def __init__(self):
+        """Create a new RowSumStats analyzer."""
+        pass        
+    
+    def get_rowsums_dict(self, history_data):
+        sums = np.sum(history_data, axis=1)
+
+        mins = np.min(sums)
+        maxs = np.max(sums)
+        u = np.round(np.mean(sums), 2)
+        x = np.round(np.std(sums), 2)
+        q1 = np.round(np.quantile(sums, 0.25), 0)
+        q3 = np.round(np.quantile(sums, 0.75), 0)
+        sk = np.round(stats.skew(sums), 2)
+
+        # print(f"Cumulo per riga - minimo: {mins} - massimo: {maxs}")
+        # print(f"Cumulo per riga - media: {u} - deviazione standard: {x}")
+        # print(f"Cumulo per riga - quartile 1: {q1} - quartile 3: {q3}")
+        # print(f"Cumulo per riga - asimmetria: {sk}")
+
+        min_bounds_simm = np.round(u - x, 0)
+        max_bounds_simm = np.round(u + x, 0)
+        coverages_simm = np.round((clib.calc_coverage(sums, min_bounds_simm, max_bounds_simm)) * 100, 2)
+        #print(f"Bounds media ± deviazione standard: min={min_bounds_simm}, max={max_bounds_simm}, coverage={coverages_simm}%")
+
+        min_bounds_asimm = q1
+        max_bounds_asimm = q3
+        coverages_asimm = np.round((clib.calc_coverage(sums, min_bounds_asimm, max_bounds_asimm)) * 100, 2)
+        #print(f"Bounds IQR: min={min_bounds_asimm}, max={max_bounds_asimm}, coverage={coverages_asimm}%")
+
+
+        results = {}
+        #results['description'] = "Rows sum bounds"
+        measures = {}
+        measures['values'] = {}
+        measures['values'] = {
+            'id': 0,
+            'type': "",
+            'min': mins,
+            'max': maxs,
+            'mean': u,
+            'std_dev': x,
+            'skewness': sk,
+            'q1': q1,
+            'q3': q3,
+            'simmetrica': {
+                'min': min_bounds_simm,
+                'max': max_bounds_simm,
+                'coverage': coverages_simm
+            },
+            'asimmetrica': {
+                'min': min_bounds_asimm,
+                'max': max_bounds_asimm,
+                'coverage': coverages_asimm
+            }
+        }
+        results['measures'] = measures
+        
         return results

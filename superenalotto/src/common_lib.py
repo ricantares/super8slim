@@ -155,6 +155,54 @@ class CommonLib:
             
         except (TypeError, ValueError, IndexError, OverflowError):
             return result
+        
+    def calc_coverage(self, data_summary, lower_bound, upper_bound):
+        """
+        Calculate coverage ratio within value ranges 
+        
+        Uses vectorized NumPy operations for performance.
+        
+        Args:
+            data_summary: 1D array with sum values
+            lower_bound: Lower bound for coverage calculation
+            upper_bound: Upper bound for coverage calculation
+        
+        Returns:
+            coverage ratio (0.0 to 1.0)
+        """
+    
+        result = 0.0
+        
+        try:
+            bounds_summary = np.asarray(data_summary, dtype=np.int64)
+            lower_bounds = np.asarray(lower_bound, dtype=np.float64)
+            upper_bounds = np.asarray(upper_bound, dtype=np.float64)
+                
+            unique, counts = np.unique(bounds_summary, return_counts=True)
+            
+            max_value = int(unique.max()) if unique.size > 0 else 0
+            count_array = np.zeros(max_value + 1, dtype=np.int64)
+            
+            count_array[unique] = counts
+            
+            min_idx = np.clip(np.round(lower_bound).astype(np.int64), 0, len(count_array) - 1)
+            max_idx = np.clip(np.round(upper_bound).astype(np.int64), 0, len(count_array) - 1)
+            
+            if min_idx > max_idx:
+                return result
+            
+            # Calculate the sum of counts within the specified range
+            sum_range = np.sum(count_array[min_idx:max_idx + 1])
+            # Calculate the total sum of counts for normalization
+            total_sum = np.sum(count_array)
+            
+            # Calculate coverage ratio, handling division by zero
+            result = sum_range / total_sum if total_sum > 0 else 0.0
+            
+            return result
+            
+        except (TypeError, ValueError, IndexError, OverflowError):
+            return result
 
     def get_forecast(self):
         """ Get a forecast extraction with the following properties:

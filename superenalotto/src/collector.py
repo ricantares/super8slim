@@ -7,6 +7,7 @@ from stats_lib import OccurencesStats
 from stats_lib import SequenceStats
 from stats_lib import DelaysStats
 from stats_lib import BoundsStats
+from stats_lib import RowSumStats
 
 class Collector:
     """Collector for SuperEnalotto draw data.
@@ -70,6 +71,12 @@ class Collector:
         bstats = BoundsStats()
         bounds = bstats.get_bounds_dict(history_data)
         return bounds
+
+    def collect_row_sums(self, history_data):
+        """Collect row sum statistics from draw data."""
+        rstats = RowSumStats()
+        row_sums = rstats.get_rowsums_dict(history_data)
+        return row_sums
 
 # Run as script
 if __name__ == "__main__":
@@ -168,6 +175,13 @@ if __name__ == "__main__":
         results["bounds"] = collector.collect_bounds(history_data)
         print(f"\nBounds collected...")
         logging.info(f"Bounds collected")
+        
+        # Run row sums collection
+        print(f"\nRunning row sums collection...")
+        logging.info(f"Running row sums collection...")
+        results["row_sums"] = collector.collect_row_sums(history_data)
+        print(f"\nRow sums collected...")
+        logging.info(f"Row sums collected")
                 
         # Save results
         with open(args.output, 'w') as f:

@@ -192,7 +192,7 @@ class Forecast:
 
         return s_limit
             
-    def check_sequences(self, base, limits, sequences):
+    def check_sequences(self, limits, sequences):
 
         bounds = limits.get('bounds', [])
         for b in bounds:
@@ -209,7 +209,7 @@ class Forecast:
     def collect_attempts_within_sequences(self, attempts, limits, count_sequences):
 
         base = attempts
-        waste, log_waste = self.check_sequences(base, limits, count_sequences(base))
+        waste, log_waste = self.check_sequences(limits, count_sequences(base))
         if not waste:
             return attempts
         else:
@@ -294,6 +294,18 @@ class Forecast:
         return wasted, attempts
 
     def find_attempts(self, idx_a, b_limits, attempts, sample, delays):
+        """ Recursive function to find valid attempts within delay limits.
+        
+            Delay bounds seem to be the most restrictive, so we generate attempts that satisfy delay bounds first, 
+            then we check them against occurrence and sequence bounds.
+            
+        Args:            idx_a (int): Current index of the attempt being generated (0 to 5).    
+                         b_limits (dict): Column bounds that each attempt must satisfy.
+                         attempts (list): List to store the generated attempts.
+                         sample (list): Historical draw data to calculate delays.
+                         delays (dict): Dictionary containing the delay statistics and bounds.
+        Returns:         None (the valid attempts are stored in the 'attempts' list).
+        """
         if idx_a < 6:
             valid = False
             # search for valid attempt
@@ -403,7 +415,56 @@ class Forecast:
         max_bounds[5] = 90
         
         return max_bounds
+    
+    def get_rowsum_bounds(self, evidenze):
+        values = evidenze.get('row_sums', {}).get('measures', {}).get('values', [])
+        #print("tot values: ", len(values))
 
+        # m_id = values.get("id", "")
+        # m_type = values.get("type", "")
+        # m_mean = values.get("mean", [])
+        # m_std = values.get("std", [])
+        m_skew = values.get("skewness", [])
+        # m_q1 = values.get("q1", [])
+        # m_q3 = values.get("q3", [])
+
+        simm = values.get("simmetrica", {})
+        asimm = values.get("asimmetrica", {})
+                    
+        bounds = {}
+        t = abs(m_skew)
+        match t:
+            case t if t < 0.5:
+                #print(f"simmetrica   {t}: min={simm.get('min')}, max={simm.get('max')}, coverage={simm.get('coverage')}%")
+                bounds = {"min": simm.get('min'), "max": simm.get('max')}
+            case t if t > 1.0:
+                #print(f"asimmetrica  {t}: min={asimm.get('min')}, max={asimm.get('max')}, coverage={asimm.get('coverage')}%")
+                bounds = {"min": asimm.get('min'), "max": asimm.get('max')}
+            case _:
+                if simm.get('coverage') >= asimm.get('coverage'):
+                    bounds = {"min": simm.get('min'), "max": simm.get('max')}
+                    #print(f"simmetrica   {t}: min={simm.get('min')}, max={simm.get('max')}, coverage={simm.get('coverage')}%")
+                else:
+                    #print(f"asimmetrica  {t}: min={asimm.get('min')}, max={asimm.get('max')}, coverage={asimm.get('coverage')}%")
+                    bounds = {"min": asimm.get('min'), "max": asimm.get('max')}
+            
+        return bounds
+
+    def check_rowsum_bounds(self, attempt, limits):
+        t = sum(attempt)
+        if t < limits.get('min') or t > limits.get('max'):
+            ##print(f"    - Measure {id} is outside the bounds!")
+            return True, {"Measure": 0, "Bounds": {"min": limits.get('min'), "max": limits.get('max'), "current": t}} # Log the first measure that is outside the bounds
+                    
+        return False, {} # All measures are within the bounds (i.e. no waste)
+
+    def collect_attempts_within_rowsums(self, attempt, limits):
+        # print("Attempt: ", attempt, " - Row sum bounds: ", limits)
+        waste, log_waste = self.check_rowsum_bounds(attempt, limits)
+        if not waste:
+            return attempt
+        else:
+            return [] * len(attempt)
 ###################################################################################################################################################################################
     
 # Run as script
@@ -483,33 +544,44 @@ if __name__ == "__main__":
         s_limits = forecast.get_sequences_stats(evidenze)
         d_limits = forecast.get_delays_stats(evidenze)
         b_limits = forecast.get_max_bounds(evidenze)
-        print(b_limits)
+        rs_limits = forecast.get_rowsum_bounds(evidenze)
+        #print(b_limits)
         
         total_attempts = args.forecast_number
         collected_attempts = [[] * 6] * total_attempts
                     
-        isafe = 0
+        isafe = 0 # Counter to limit the number of attempts to find valid forecasts, to avoid infinite loops in case of too restrictive rules
         ia = 0
         while ia < total_attempts and isafe < 1000:
-            print("\nChecking attempts within delays", end=" ")
+            print("\nGenerate attempt and checking within delays", end=" ")
             # Loop until a valid attempt found
             wasted, attempts = forecast.collect_attempts_within_delays(history_data, d_limits, b_limits, dstats)
             print("Passed: ", attempts, " - discarded: ", wasted)
-                            
-            print("Checking attempts within occurrences", end=" ")
+
+            print("Checking attempt within occurrences", end=" ")
             good_attempts = forecast.collect_attempts_within_occurrences(attempts, history_data, o_limits, ostats.single_combination_occurrences)
             
             if len(good_attempts) > 0:
                 print("Passed")
                 
-                print("Checking attempts within sequences", end=" ")
+                print("Checking attempt within sequences", end=" ")
                 attempts = good_attempts
                 good_attempts = forecast.collect_attempts_within_sequences(attempts, s_limits, sstats.count_sequences)
                 
                 if len(good_attempts) > 0:
                     print("Passed")
-                    collected_attempts[ia] = good_attempts
-                    ia += 1
+                    
+                    print("Checking attempt within rowsums", end=" ")
+                    attempts = good_attempts
+                    good_attempts = forecast.collect_attempts_within_rowsums(attempts, rs_limits)
+                    
+                    if len(good_attempts) > 0:
+                        print("Passed")
+                        collected_attempts[ia] = good_attempts
+                        ia += 1
+                    else:
+                        print("Discarded")
+                        isafe += 1
                 else:
                     print("Discarded")
                     isafe += 1
