@@ -116,6 +116,47 @@ estrazione = ll.genera_estrazione()
 freq = ll.freq_combinazioni(estrazione, 0, 90)
 ```
 
+## Collector Usage
+
+The collector script can analyze historical draw data and save JSON statistics.
+
+```bash
+python3 superenalotto/src/collector.py data/estrazioni_2023.csv \
+  --history-size 200 \
+  --sample-size 15 \
+  -o results.json
+```
+
+### CLI options
+- `--history-size`: number of historical draws to load (default: all)
+- `--sample-size`: sample size to use for occurrence analysis; valid values: `15`, `30`, `60`, `90`, `all`
+- `--workers`: number of parallel workers to use for independent collections
+- `--threaded`: use `ThreadPoolExecutor` instead of `ProcessPoolExecutor` for parallel collection
+- `--profile`: run the collector under `cProfile`
+- `--profile-output`: file to write profiling data (default: `collector.prof`)
+- `--profile-top`: number of top functions to print from profiling output
+
+### Example threaded run
+
+```bash
+python3 superenalotto/src/collector.py data/estrazioni_2023.csv \
+  --history-size 200 \
+  --sample-size 15 \
+  --threaded \
+  --workers 4 \
+  -o results_threaded.json
+```
+
+### Example profiling run
+
+```bash
+python3 superenalotto/src/collector.py data/estrazioni_2023.csv \
+  --history-size 200 \
+  --sample-size 15 \
+  --profile \
+  --profile-output /tmp/collector.prof
+```
+
 ## Data Format
 
 ### Draws CSV

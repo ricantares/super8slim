@@ -1643,7 +1643,6 @@
     }
   },
   "bounds": {
-    "description": "Bounds",
     "measures": {
       "values": [
         {
@@ -1778,26 +1777,26 @@
   "row_sums": {
     "measures": {
       "values": {
-          "id": 0,
-          "type": "",
-          "min": 81,
-          "max": 467,
-          "mean": 276.23,
-          "std_dev": 61.23,
-          "skewness": -0.03,
-          "q1": 234.0,
-          "q3": 318.0,
-          "simmetrica": {
-            "min": 215.0,
-            "max": 337.0,
-            "coverage": 97.91
-          },
-          "asimmetrica": {
-            "min": 234.0,
-            "max": 318.0,
-            "coverage": 50.97
-          }
+        "id": 0,
+        "type": "",
+        "min": "81",
+        "max": "467",
+        "mean": 276.23,
+        "std_dev": 61.23,
+        "skewness": -0.03,
+        "q1": 234.0,
+        "q3": 318.0,
+        "simmetrica": {
+          "min": 215.0,
+          "max": 337.0,
+          "coverage": 68.34
+        },
+        "asimmetrica": {
+          "min": 234.0,
+          "max": 318.0,
+          "coverage": 50.97
         }
+      }
     }
   }
 }

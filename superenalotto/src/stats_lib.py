@@ -189,18 +189,32 @@ class OccurencesStats:
             1D array of presence counts, one per combination
         """
         total_combinations = len(base_combinations)
-        occurrences = np.empty([0, total_combinations], dtype=int)
-        
-        for j in range(0, total_combinations):
-            cb = np.array(base_combinations[j])
-            ip = 0
-            
-            for m in range(0, len(sample)):
-                if (len(np.setdiff1d(cb, sample[m])) == 0):
-                    ip += 1 
-            
-            occurrences = np.append(occurrences, ip)
-        
+        n_rows = len(sample)
+
+        # Pre-allocate result array (1D) for counts
+        occurrences = np.zeros(total_combinations, dtype=np.int64)
+
+        if n_rows == 0 or total_combinations == 0:
+            return occurrences
+
+        # Convert sample to numpy array for fast comparisons (shape: n_rows x 6)
+        sample_arr = np.asarray(sample)
+
+        # For each combination, compute a boolean mask over rows indicating
+        # whether all elements of the combination are present in that row.
+        # Use vectorized comparisons: for each value x in combo, compute
+        # `np.any(sample_arr == x, axis=1)` and reduce with logical_and.
+        for j in range(total_combinations):
+            cb = np.asarray(base_combinations[j])
+
+            # Start with all True mask and AND with presence of each element
+            mask = np.ones(n_rows, dtype=bool)
+            for x in cb:
+                mask &= np.any(sample_arr == x, axis=1)
+
+            # Count rows where all elements of cb are present
+            occurrences[j] = int(np.count_nonzero(mask))
+
         return occurrences
     
     def get_statistics_dictionary(self, summaries):

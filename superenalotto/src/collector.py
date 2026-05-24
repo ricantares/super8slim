@@ -78,6 +78,27 @@ class Collector:
         row_sums = rstats.get_rowsums_dict(history_data)
         return row_sums
 
+
+# Worker wrappers for parallel execution. Defined at module scope so they are picklable.
+def run_sequences_worker(history_data):
+    sstats = SequenceStats()
+    return sstats.get_sequence_dict(history_data)
+
+
+def run_delays_worker(history_data):
+    dstats = DelaysStats()
+    return dstats.get_delays_dict(history_data)
+
+
+def run_bounds_worker(history_data):
+    bstats = BoundsStats()
+    return bstats.get_bounds_dict(history_data)
+
+
+def run_row_sums_worker(history_data):
+    rstats = RowSumStats()
+    return rstats.get_rowsums_dict(history_data)
+
 # Run as script
 if __name__ == "__main__":
     import sys
@@ -87,30 +108,21 @@ if __name__ == "__main__":
     # Default output file (optional)
     DEFAULT_OUTPUT_FILE = "superenalotto/collector_results.json"
     
-    def main():
-        """Main entry point for the Collector script."""
-        import argparse
+    def run_collector(args):
+        """Run the collection pipeline using parsed args. Separated for profiling."""
         import time
-        
+
         start_time = time.time()
-        
-        parser = argparse.ArgumentParser(description="SuperEnalotto Data Collector")
-        parser.add_argument("input_file", help="Path to CSV data file")
-        parser.add_argument("-o", "--output", default=DEFAULT_OUTPUT_FILE, help="Path to output JSON file")
-        parser.add_argument("--history-size", type=int, default=None, help="History size (integer, default: None)")
-        parser.add_argument("--sample-size", default="15", help="Sample size: 15, 30, 60, 90, or 'all' (default: 15)")
-        
-        args = parser.parse_args()
-        
+
         # Validate sample_size
         sample_size_values = ["15", "30", "60", "90", "all"]
         if args.sample_size not in sample_size_values:
             print(f"Error: sample-size must be one of: {', '.join(sample_size_values)}")
             sys.exit(1)
-        
+
         # Convert 'all' to None for full data usage
         sample_size = None if args.sample_size == "all" else int(args.sample_size)
-        
+
         print(f"Collector - SuperEnalotto Data Collector")
         print(f"=========================================")
         print(f"Input file: {args.input_file}")
@@ -118,30 +130,30 @@ if __name__ == "__main__":
         print(f"History size: {args.history_size}")
         print(f"Sample size: {args.sample_size}")
         print()
-        
+
         # Validate input file exists
         if not os.path.exists(args.input_file):
             print(f"Error: Input file not found: {args.input_file}")
             sys.exit(1)
-               
+
         # log file
         logging.basicConfig(filename='superenalotto/analisi_statistiche.log', filemode='w', level=logging.INFO)
         logging.info(f"Inizio analisi statistiche {datetime.datetime.now()}")
-        
+
         # Initialize collector
         collector = Collector(args.input_file, args.history_size, sample_size)
         print(f"Collector initialized with: data_file={args.input_file}, history_size={args.history_size}, sample_size={sample_size}")
         logging.info(f"Collector initialized with: data_file={args.input_file}, history_size={args.history_size}, sample_size={sample_size}")
-                        
+
         # Get historical data
         history_data = collector.collect_data()
-        
+
         # Initialize output file
         results = {}
         results["origine_dati"] = args.input_file
         results["ultima_estrazione"] = collector.last_extraction_date
         results["elementi_storico"] = len(history_data)
-        
+
         # Run occurrences collection
         print(f"\nRunning occurrences collection...")
         logging.info(f"Running occurrences collection...")
@@ -154,48 +166,84 @@ if __name__ == "__main__":
             results["occurrences"][sample_size] = collector.collect_occurrences(history_data, sample_size)
         print(f"\nOccurrences collected...")
         logging.info(f"Occurrences collected for sample size: {args.sample_size}")
-                
-        # Run sequences collection
-        print(f"\nRunning sequences collection...")
-        logging.info(f"Running sequences collection...")
-        results["sequences"] = collector.collect_sequences(history_data)
-        print(f"\nSequences collected...")
-        logging.info(f"Sequences collected")
-                
-        # Run delays collection
-        print(f"\nRunning delays collection...")
-        logging.info(f"Running delays collection...")
-        results["delays"] = collector.collect_delays(history_data)
-        print(f"\nDelays collected...")
-        logging.info(f"Delays collected")
-                
-        # Run bounds collection
-        print(f"\nRunning bounds collection...")
-        logging.info(f"Running bounds collection...")
-        results["bounds"] = collector.collect_bounds(history_data)
-        print(f"\nBounds collected...")
-        logging.info(f"Bounds collected")
-        
-        # Run row sums collection
-        print(f"\nRunning row sums collection...")
-        logging.info(f"Running row sums collection...")
-        results["row_sums"] = collector.collect_row_sums(history_data)
-        print(f"\nRow sums collected...")
-        logging.info(f"Row sums collected")
-                
+
+        # Run sequences, delays, bounds, and row_sums collections in parallel
+        print(f"\nRunning parallel collections (sequences, delays, bounds, row_sums)...")
+        logging.info(f"Running parallel collections (sequences, delays, bounds, row_sums)")
+
+        from concurrent.futures import ProcessPoolExecutor, ThreadPoolExecutor, as_completed
+        worker_funcs = {
+            "sequences": run_sequences_worker,
+            "delays": run_delays_worker,
+            "bounds": run_bounds_worker,
+            "row_sums": run_row_sums_worker,
+        }
+
+        # Submit tasks
+        results.update({k: None for k in worker_funcs})
+        # Determine worker count (CLI override available)
+        max_workers = args.workers if getattr(args, 'workers', None) else (os.cpu_count() or 2)
+
+        # Choose executor type: ThreadPoolExecutor or ProcessPoolExecutor
+        Executor = ThreadPoolExecutor if getattr(args, 'threaded', False) else ProcessPoolExecutor
+
+        with Executor(max_workers=max_workers) as ex:
+            future_map = {ex.submit(func, history_data): name for name, func in worker_funcs.items()}
+            for fut in as_completed(future_map):
+                name = future_map[fut]
+                try:
+                    results[name] = fut.result()
+                    logging.info(f"{name} collected")
+                    print(f"{name.capitalize()} collected...")
+                except Exception:
+                    logging.exception(f"Error collecting {name}")
+                    results[name] = None
+
         # Save results
         with open(args.output, 'w') as f:
             json.dump(results, f, indent=2, default=str)
         print(f"Results saved to: {args.output}")
         logging.info(f"Results saved to: {args.output}")
-        
+
         # Print elapsed time
         elapsed = time.time() - start_time
         print(f"\nElapsed time: {elapsed:.2f} seconds")
         logging.info(f"Elapsed time: {elapsed:.2f} seconds")
-        
+
         return results
     
+    def main():
+        import argparse
+        import cProfile
+        import pstats
+        import io
+
+        parser = argparse.ArgumentParser(description="SuperEnalotto Data Collector")
+        parser.add_argument("input_file", help="Path to CSV data file")
+        parser.add_argument("-o", "--output", default=DEFAULT_OUTPUT_FILE, help="Path to output JSON file")
+        parser.add_argument("--history-size", type=int, default=None, help="History size (integer, default: None)")
+        parser.add_argument("--sample-size", default="15", help="Sample size: 15, 30, 60, 90, or 'all' (default: 15)")
+        parser.add_argument("--profile", action="store_true", help="Run under cProfile and dump stats")
+        parser.add_argument("--profile-output", default="collector.prof", help="Filename to dump cProfile stats")
+        parser.add_argument("--profile-top", type=int, default=20, help="Number of top functions to print from profile")
+        parser.add_argument("--workers", type=int, default=None, help="Number of workers for parallel collections (default: CPU count)")
+        parser.add_argument("--threaded", action="store_true", help="Use ThreadPoolExecutor instead of ProcessPoolExecutor for parallel collections")
+
+        args = parser.parse_args()
+
+        if args.profile:
+            pr = cProfile.Profile()
+            pr.runcall(run_collector, args)
+            pr.dump_stats(args.profile_output)
+
+            s = io.StringIO()
+            ps = pstats.Stats(pr, stream=s).sort_stats('cumulative')
+            ps.print_stats(args.profile_top)
+            print(f"Profiling results (top {args.profile_top} functions):")
+            print(s.getvalue())
+        else:
+            run_collector(args)
+
     # Run main if executed directly
     if __name__ == "__main__":
         main()
