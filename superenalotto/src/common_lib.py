@@ -175,8 +175,8 @@ class CommonLib:
         
         try:
             bounds_summary = np.asarray(data_summary, dtype=np.int64)
-            lower_bounds = np.asarray(lower_bound, dtype=np.float64)
-            upper_bounds = np.asarray(upper_bound, dtype=np.float64)
+            # lower_bounds = np.asarray(lower_bound, dtype=np.float64)
+            # upper_bounds = np.asarray(upper_bound, dtype=np.float64)
                 
             unique, counts = np.unique(bounds_summary, return_counts=True)
             
@@ -203,6 +203,29 @@ class CommonLib:
             
         except (TypeError, ValueError, IndexError, OverflowError):
             return result
+
+    def euclidean_distance_6d(self, point_a, point_b):
+        """
+        Calculate the Euclidean distance between two points in 6-dimensional space.
+
+        Uses NumPy vectorized operations for speed.
+
+        Args:
+            point_a: Iterable with 6 numeric values
+            point_b: Iterable with 6 numeric values
+
+        Returns:
+            float: Euclidean distance between point_a and point_b,
+            or None if inputs are invalid.
+        """
+        try:
+            a = np.asarray(point_a, dtype=np.float64)
+            b = np.asarray(point_b, dtype=np.float64)
+            if a.shape != (6,) or b.shape != (6,):
+                return None
+            return float(np.linalg.norm(a - b))
+        except (TypeError, ValueError):
+            return None
 
     def get_forecast(self):
         """ Get a forecast extraction with the following properties:
