@@ -1,0 +1,11 @@
+2026-10-18 20:30:10,821 - INFO - Inizio analisi statistiche 2026-10-18 20:30:10.820977
+2026-10-18 20:30:10,821 - INFO - Forecast initialized with: data_file=data/estrazioni_2026_2006_copy.csv, forecast_number=10
+2026-10-18 20:30:10,821 - INFO - Running forecast generation...
+2026-10-18 20:30:10,822 - DEBUG - caricamento dati
+2026-10-18 20:30:10,822 - DEBUG - file: data/estrazioni_2026_2006_copy.csv
+2026-10-18 20:30:10,823 - DEBUG - load_rows: None
+2026-10-18 20:30:10,829 - DEBUG - caricamento dati
+2026-10-18 20:30:10,829 - DEBUG - file: data/estrazioni_2026_2006_copy.csv
+2026-10-18 20:30:10,830 - DEBUG - load_rows: None
+2026-10-18 20:30:11,033 - INFO - Forecast generated
+2026-10-18 20:30:11,033 - INFO - Elapsed time: 0.22 seconds

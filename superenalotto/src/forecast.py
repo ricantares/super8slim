@@ -472,9 +472,18 @@ if __name__ == "__main__":
     import sys
     import os
     import json
+    import configparser
     
-    # Default input statistics file (optional)
-    DEFAULT_STATS_FILE = "superenalotto/collector_results.json"
+    # Configuration
+    config = configparser.ConfigParser()
+    config.read("config.ini")
+
+    LOG_FILE = config.get("logging", "log_file")
+    LOG_LEVEL = config.get("logging", "log_level")
+    FORECAST_FILE = config.get("forecast", "forecast_directives")
+    FORECAST_OUTPUT_FILE = config.get("forecast", "forecast_output_file")
+    FORECAST_COMBINATIONS_NUMBER = config.get("forecast", "forecast_combinations_number")
+    HYSTORICAL_DATA_FILE = config.get("hystorical_data", "data_file")
     
     def main():
         """Main entry point for the Forecast script."""
@@ -484,9 +493,9 @@ if __name__ == "__main__":
         start_time = time.time()
         
         parser = argparse.ArgumentParser(description="SuperEnalotto Data Collector")
-        parser.add_argument("input_file", help="Path to CSV data file")
-        parser.add_argument("--stats", default=DEFAULT_STATS_FILE, help="Path to statistics JSON file")
-        parser.add_argument("--forecast_number", default="100", help="Number of forecasts to generate (default: 100)")
+        parser.add_argument("--input_file", default=HYSTORICAL_DATA_FILE, help="Path to CSV data file")
+        parser.add_argument("--stats", default=FORECAST_FILE, help="Path to statistics JSON file")
+        parser.add_argument("--forecast_number", default=FORECAST_COMBINATIONS_NUMBER, help="Number of forecasts to generate")
         
         args = parser.parse_args()
         
@@ -514,7 +523,7 @@ if __name__ == "__main__":
             sys.exit(1)
                
         # log file
-        logging.basicConfig(filename='superenalotto/analisi_statistiche.log', filemode='w', level=logging.INFO)
+        logging.basicConfig(filename=LOG_FILE, filemode='w', level=LOG_LEVEL, format='%(asctime)s - %(levelname)s - %(message)s')
         logging.info(f"Inizio analisi statistiche {datetime.now()}")
         
         # Initialize forecast
@@ -590,7 +599,7 @@ if __name__ == "__main__":
                 isafe += 1
                 
         print("Collected attempts: ", collected_attempts)
-        forecast_file = "superenalotto/forecast.csv"
+        forecast_file = FORECAST_OUTPUT_FILE
         np.savetxt(forecast_file, collected_attempts, delimiter=';', fmt='%d')
             
         print(f"\nForecast generated...")

@@ -1,0 +1,2 @@
+wslc build -t python-sup8 .
+wslc run -it --rm -v "${PWD}\superenalotto:/app/superenalotto" python-sup8 bash

@@ -59,6 +59,8 @@ class CommonLib:
             numpy.ndarray: 2D array of shape (k, 6) containing extractions
         """
         logging.debug("caricamento dati")
+        logging.debug(f"file: {self.__hystorical_data_file_name}")
+        logging.debug(f"load_rows: {load_rows}")
         __hystorical_data = np.loadtxt(
             self.__hystorical_data_file_name, 
             dtype=int, 
