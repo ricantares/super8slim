@@ -1,2 +1,4 @@
 numpy
 scipy
+beautifulsoup4
+requests
