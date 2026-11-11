@@ -480,10 +480,10 @@ if __name__ == "__main__":
 
     LOG_FILE = config.get("logging", "log_file")
     LOG_LEVEL = config.get("logging", "log_level")
-    FORECAST_FILE = config.get("forecast", "forecast_directives")
+    FORECAST_FILE = config.get("collector", "output_file")
     FORECAST_OUTPUT_FILE = config.get("forecast", "forecast_output_file")
     FORECAST_COMBINATIONS_NUMBER = config.get("forecast", "forecast_combinations_number")
-    HYSTORICAL_DATA_FILE = config.get("hystorical_data", "data_file")
+    HYSTORICAL_DATA_FILE = config.get("collector", "input_file")
     
     def main():
         """Main entry point for the Forecast script."""

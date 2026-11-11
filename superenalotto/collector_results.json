@@ -1,7 +1,7 @@
 {
-  "origine_dati": "superenalotto/data/estrazioni_2026_2006_copy.csv",
-  "ultima_estrazione": 20260120,
-  "elementi_storico": 3253,
+  "origine_dati": "./data/storico_estrazioni_2026_2006.csv",
+  "ultima_estrazione": 20260630,
+  "elementi_storico": 3345,
   "occurrences": {
     "15": {
       "1": {
@@ -12,81 +12,81 @@
             {
               "id": 0,
               "type": "Totale presenze",
-              "total": "19302",
+              "total": "19862",
               "mean": 5.96,
               "std": 2.24,
-              "skewness": 0.29,
+              "skewness": 0.28,
               "q1": 4.0,
               "q3": 7.0,
               "simmetrica": {
                 "min": 4.0,
                 "max": 8.0,
-                "coverage": 73.22
+                "coverage": 73.33
               },
               "asimmetrica": {
                 "min": 4.0,
                 "max": 7.0,
-                "coverage": 62.69
+                "coverage": 62.61
               }
             },
             {
               "id": 1,
               "type": "Combinazioni con almeno una presenza",
-              "total": "12535",
+              "total": "12902",
               "mean": 3.87,
-              "std": 1.17,
-              "skewness": -0.23,
+              "std": 1.16,
+              "skewness": -0.24,
               "q1": 3.0,
               "q3": 5.0,
               "simmetrica": {
                 "min": 3.0,
                 "max": 5.0,
-                "coverage": 80.61
+                "coverage": 80.75
               },
               "asimmetrica": {
                 "min": 3.0,
                 "max": 5.0,
-                "coverage": 80.61
+                "coverage": 80.75
               }
             },
             {
               "id": 2,
               "type": "Combinazioni senza presenze",
-              "total": "6893",
+              "total": "7078",
               "mean": 2.13,
-              "std": 1.17,
-              "skewness": 0.23,
+              "std": 1.16,
+              "skewness": 0.24,
               "q1": 1.0,
               "q3": 3.0,
               "simmetrica": {
                 "min": 1.0,
                 "max": 3.0,
-                "coverage": 80.61
+                "coverage": 80.75
               },
               "asimmetrica": {
                 "min": 1.0,
                 "max": 3.0,
-                "coverage": 80.61
+                "coverage": 80.75
               }
             },
             {
               "id": 3,
               "type": "Massima frequenza di presenza",
-              "total": "7449",
+              "total": "7662",
               "mean": 2.3,
               "std": 0.84,
-              "skewness": 0.5,
+              "skewness": 0.49,
               "q1": 2.0,
               "q3": 3.0,
               "simmetrica": {
                 "min": 1.0,
                 "max": 3.0,
-                "coverage": 92.43
+                "coverage": 92.37
               },
               "asimmetrica": {
                 "min": 2.0,
                 "max": 3.0,
-                "coverage": 77.67
+                "coverage": 77.57
               }
             }
           ]
@@ -100,81 +100,81 @@
             {
               "id": 0,
               "type": "Totale presenze",
-              "total": "2696",
+              "total": "2777",
               "mean": 0.83,
               "std": 1.03,
-              "skewness": 1.5,
+              "skewness": 1.49,
               "q1": 0.0,
               "q3": 1.0,
               "simmetrica": {
                 "min": -0.0,
                 "max": 2.0,
-                "coverage": 92.37
+                "coverage": 92.31
               },
               "asimmetrica": {
                 "min": 0.0,
                 "max": 1.0,
-                "coverage": 80.95
+                "coverage": 80.93
               }
             },
             {
               "id": 1,
               "type": "Combinazioni con almeno una presenza",
-              "total": "2619",
+              "total": "2699",
               "mean": 0.81,
               "std": 0.99,
-              "skewness": 1.47,
+              "skewness": 1.46,
               "q1": 0.0,
               "q3": 1.0,
               "simmetrica": {
                 "min": -0.0,
                 "max": 2.0,
-                "coverage": 92.99
+                "coverage": 92.94
               },
               "asimmetrica": {
                 "min": 0.0,
                 "max": 1.0,
-                "coverage": 81.96
+                "coverage": 81.92
               }
             },
             {
               "id": 2,
               "type": "Combinazioni senza presenze",
-              "total": "45951",
+              "total": "47236",
               "mean": 14.19,
               "std": 0.99,
-              "skewness": -1.47,
+              "skewness": -1.46,
               "q1": 14.0,
               "q3": 15.0,
               "simmetrica": {
                 "min": 13.0,
                 "max": 15.0,
-                "coverage": 92.99
+                "coverage": 92.94
               },
               "asimmetrica": {
                 "min": 14.0,
                 "max": 15.0,
-                "coverage": 81.96
+                "coverage": 81.92
               }
             },
             {
               "id": 3,
               "type": "Massima frequenza di presenza",
-              "total": "1795",
-              "mean": 0.55,
+              "total": "1849",
+              "mean": 0.56,
               "std": 0.54,
-              "skewness": 0.27,
+              "skewness": 0.26,
               "q1": 0.0,
               "q3": 1.0,
               "simmetrica": {
                 "min": 0.0,
                 "max": 1.0,
-                "coverage": 97.75
+                "coverage": 97.78
               },
               "asimmetrica": {
                 "min": 0.0,
                 "max": 1.0,
-                "coverage": 97.75
+                "coverage": 97.78
               }
             }
           ]
@@ -188,81 +188,81 @@
             {
               "id": 0,
               "type": "Totale presenze",
-              "total": "160",
+              "total": "166",
               "mean": 0.05,
               "std": 0.23,
-              "skewness": 5.32,
+              "skewness": 5.28,
               "q1": 0.0,
               "q3": 0.0,
               "simmetrica": {
                 "min": -0.0,
                 "max": 0.0,
-                "coverage": 95.14
+                "coverage": 95.13
               },
               "asimmetrica": {
                 "min": 0.0,
                 "max": 0.0,
-                "coverage": 95.14
+                "coverage": 95.13
               }
             },
             {
               "id": 1,
               "type": "Combinazioni con almeno una presenza",
-              "total": "160",
+              "total": "166",
               "mean": 0.05,
               "std": 0.23,
-              "skewness": 5.32,
+              "skewness": 5.28,
               "q1": 0.0,
               "q3": 0.0,
               "simmetrica": {
                 "min": -0.0,
                 "max": 0.0,
-                "coverage": 95.14
+                "coverage": 95.13
               },
               "asimmetrica": {
                 "min": 0.0,
                 "max": 0.0,
-                "coverage": 95.14
+                "coverage": 95.13
               }
             },
             {
               "id": 2,
               "type": "Combinazioni senza presenze",
-              "total": "64020",
+              "total": "66334",
               "mean": 19.95,
               "std": 0.23,
-              "skewness": -5.32,
+              "skewness": -5.28,
               "q1": 20.0,
               "q3": 20.0,
               "simmetrica": {
                 "min": 20.0,
                 "max": 20.0,
-                "coverage": 95.14
+                "coverage": 95.13
               },
               "asimmetrica": {
                 "min": 20.0,
                 "max": 20.0,
-                "coverage": 95.14
+                "coverage": 95.13
               }
             },
             {
               "id": 3,
               "type": "Massima frequenza di presenza",
-              "total": "156",
+              "total": "162",
               "mean": 0.05,
               "std": 0.22,
-              "skewness": 4.2,
+              "skewness": 4.19,
               "q1": 0.0,
               "q3": 0.0,
               "simmetrica": {
                 "min": -0.0,
                 "max": 0.0,
-                "coverage": 95.14
+                "coverage": 95.13
               },
               "asimmetrica": {
                 "min": 0.0,
                 "max": 0.0,
-                "coverage": 95.14
+                "coverage": 95.13
               }
             }
           ]
@@ -366,27 +366,27 @@
             {
               "id": 0,
               "type": "Totale presenze",
-              "total": "38436",
+              "total": "39562",
               "mean": 11.93,
               "std": 3.21,
-              "skewness": 0.3,
+              "skewness": 0.29,
               "q1": 10.0,
               "q3": 14.0,
               "simmetrica": {
                 "min": 9.0,
                 "max": 15.0,
-                "coverage": 72.57
+                "coverage": 72.61
               },
               "asimmetrica": {
                 "min": 10.0,
                 "max": 14.0,
-                "coverage": 56.0
+                "coverage": 56.02
               }
             },
             {
               "id": 1,
               "type": "Combinazioni con almeno una presenza",
-              "total": "16895",
+              "total": "17378",
               "mean": 5.24,
               "std": 0.8,
               "skewness": -0.82,
@@ -395,18 +395,18 @@
               "simmetrica": {
                 "min": 4.0,
                 "max": 6.0,
-                "coverage": 97.58
+                "coverage": 97.62
               },
               "asimmetrica": {
                 "min": 5.0,
                 "max": 6.0,
-                "coverage": 82.62
+                "coverage": 82.65
               }
             },
             {
               "id": 2,
               "type": "Combinazioni senza presenze",
-              "total": "2443",
+              "total": "2512",
               "mean": 0.76,
               "std": 0.8,
               "skewness": 0.82,
@@ -415,32 +415,32 @@
               "simmetrica": {
                 "min": -0.0,
                 "max": 2.0,
-                "coverage": 97.58
+                "coverage": 97.62
               },
               "asimmetrica": {
                 "min": 0.0,
                 "max": 1.0,
-                "coverage": 82.62
+                "coverage": 82.65
               }
             },
             {
               "id": 3,
               "type": "Massima frequenza di presenza",
-              "total": "12228",
-              "mean": 3.79,
+              "total": "12587",
+              "mean": 3.8,
               "std": 1.08,
-              "skewness": 0.46,
+              "skewness": 0.45,
               "q1": 3.0,
               "q3": 4.0,
               "simmetrica": {
                 "min": 3.0,
                 "max": 5.0,
-                "coverage": 84.05
+                "coverage": 84.1
               },
               "asimmetrica": {
                 "min": 3.0,
                 "max": 4.0,
-                "coverage": 67.33
+                "coverage": 67.27
               }
             }
           ]
@@ -454,27 +454,27 @@
             {
               "id": 0,
               "type": "Totale presenze",
-              "total": "5401",
+              "total": "5564",
               "mean": 1.68,
               "std": 1.47,
-              "skewness": 1.17,
+              "skewness": 1.18,
               "q1": 1.0,
               "q3": 2.0,
               "simmetrica": {
                 "min": 0.0,
                 "max": 3.0,
-                "coverage": 88.89
+                "coverage": 88.99
               },
               "asimmetrica": {
                 "min": 1.0,
                 "max": 2.0,
-                "coverage": 55.26
+                "coverage": 55.38
               }
             },
             {
               "id": 1,
               "type": "Combinazioni con almeno una presenza",
-              "total": "5079",
+              "total": "5234",
               "mean": 1.58,
               "std": 1.33,
               "skewness": 1.01,
@@ -483,18 +483,18 @@
               "simmetrica": {
                 "min": 0.0,
                 "max": 3.0,
-                "coverage": 91.0
+                "coverage": 91.07
               },
               "asimmetrica": {
                 "min": 1.0,
                 "max": 2.0,
-                "coverage": 57.74
+                "coverage": 57.86
               }
             },
             {
               "id": 2,
               "type": "Combinazioni senza presenze",
-              "total": "43266",
+              "total": "44491",
               "mean": 13.42,
               "std": 1.33,
               "skewness": -1.01,
@@ -503,32 +503,32 @@
               "simmetrica": {
                 "min": 12.0,
                 "max": 15.0,
-                "coverage": 91.0
+                "coverage": 91.07
               },
               "asimmetrica": {
                 "min": 13.0,
                 "max": 14.0,
-                "coverage": 57.74
+                "coverage": 57.86
               }
             },
             {
               "id": 3,
               "type": "Massima frequenza di presenza",
-              "total": "2832",
+              "total": "2917",
               "mean": 0.88,
-              "std": 0.55,
-              "skewness": 0.12,
+              "std": 0.54,
+              "skewness": 0.11,
               "q1": 1.0,
               "q3": 1.0,
               "simmetrica": {
                 "min": 0.0,
                 "max": 1.0,
-                "coverage": 91.31
+                "coverage": 91.34
               },
               "asimmetrica": {
                 "min": 1.0,
                 "max": 1.0,
-                "coverage": 70.06
+                "coverage": 70.26
               }
             }
           ]
@@ -542,27 +542,27 @@
             {
               "id": 0,
               "type": "Totale presenze",
-              "total": "322",
+              "total": "331",
               "mean": 0.1,
               "std": 0.34,
-              "skewness": 4.53,
+              "skewness": 4.52,
               "q1": 0.0,
               "q3": 0.0,
               "simmetrica": {
                 "min": -0.0,
                 "max": 0.0,
-                "coverage": 90.8
+                "coverage": 90.88
               },
               "asimmetrica": {
                 "min": 0.0,
                 "max": 0.0,
-                "coverage": 90.8
+                "coverage": 90.88
               }
             },
             {
               "id": 1,
               "type": "Combinazioni con almeno una presenza",
-              "total": "321",
+              "total": "330",
               "mean": 0.1,
               "std": 0.34,
               "skewness": 4.53,
@@ -571,18 +571,18 @@
               "simmetrica": {
                 "min": -0.0,
                 "max": 0.0,
-                "coverage": 90.8
+                "coverage": 90.88
               },
               "asimmetrica": {
                 "min": 0.0,
                 "max": 0.0,
-                "coverage": 90.8
+                "coverage": 90.88
               }
             },
             {
               "id": 2,
               "type": "Combinazioni senza presenze",
-              "total": "63559",
+              "total": "65870",
               "mean": 19.9,
               "std": 0.34,
               "skewness": -4.53,
@@ -591,32 +591,32 @@
               "simmetrica": {
                 "min": 20.0,
                 "max": 20.0,
-                "coverage": 90.8
+                "coverage": 90.88
               },
               "asimmetrica": {
                 "min": 20.0,
                 "max": 20.0,
-                "coverage": 90.8
+                "coverage": 90.88
               }
             },
             {
               "id": 3,
               "type": "Massima frequenza di presenza",
-              "total": "295",
+              "total": "303",
               "mean": 0.09,
               "std": 0.29,
-              "skewness": 2.85,
+              "skewness": 2.87,
               "q1": 0.0,
               "q3": 0.0,
               "simmetrica": {
                 "min": -0.0,
                 "max": 0.0,
-                "coverage": 90.8
+                "coverage": 90.88
               },
               "asimmetrica": {
                 "min": 0.0,
                 "max": 0.0,
-                "coverage": 90.8
+                "coverage": 90.88
               }
             }
           ]
@@ -720,81 +720,81 @@
             {
               "id": 0,
               "type": "Totale presenze",
-              "total": "76488",
+              "total": "78668",
               "mean": 23.95,
               "std": 4.49,
-              "skewness": 0.13,
+              "skewness": 0.12,
               "q1": 21.0,
               "q3": 27.0,
               "simmetrica": {
                 "min": 19.0,
                 "max": 28.0,
-                "coverage": 73.44
+                "coverage": 73.52
               },
               "asimmetrica": {
                 "min": 21.0,
                 "max": 27.0,
-                "coverage": 55.84
+                "coverage": 56.01
               }
             },
             {
               "id": 1,
               "type": "Combinazioni con almeno una presenza",
-              "total": "18865",
+              "total": "19406",
               "mean": 5.91,
               "std": 0.3,
-              "skewness": -3.36,
+              "skewness": -3.32,
               "q1": 6.0,
               "q3": 6.0,
               "simmetrica": {
                 "min": 6.0,
                 "max": 6.0,
-                "coverage": 91.23
+                "coverage": 91.14
               },
               "asimmetrica": {
                 "min": 6.0,
                 "max": 6.0,
-                "coverage": 91.23
+                "coverage": 91.14
               }
             },
             {
               "id": 2,
               "type": "Combinazioni senza presenze",
-              "total": "293",
+              "total": "304",
               "mean": 0.09,
               "std": 0.3,
-              "skewness": 3.36,
+              "skewness": 3.32,
               "q1": 0.0,
               "q3": 0.0,
               "simmetrica": {
                 "min": -0.0,
                 "max": 0.0,
-                "coverage": 91.23
+                "coverage": 91.14
               },
               "asimmetrica": {
                 "min": 0.0,
                 "max": 0.0,
-                "coverage": 91.23
+                "coverage": 91.14
               }
             },
             {
               "id": 3,
               "type": "Massima frequenza di presenza",
-              "total": "20826",
+              "total": "21414",
               "mean": 6.52,
-              "std": 1.45,
+              "std": 1.44,
               "skewness": 0.51,
               "q1": 6.0,
               "q3": 7.0,
               "simmetrica": {
                 "min": 5.0,
                 "max": 8.0,
-                "coverage": 85.41
+                "coverage": 85.63
               },
               "asimmetrica": {
                 "min": 6.0,
                 "max": 7.0,
-                "coverage": 52.8
+                "coverage": 53.09
               }
             }
           ]
@@ -808,81 +808,81 @@
             {
               "id": 0,
               "type": "Totale presenze",
-              "total": "10693",
-              "mean": 3.35,
+              "total": "10978",
+              "mean": 3.34,
               "std": 2.04,
-              "skewness": 0.82,
+              "skewness": 0.84,
               "q1": 2.0,
               "q3": 5.0,
               "simmetrica": {
                 "min": 1.0,
                 "max": 5.0,
-                "coverage": 81.18
+                "coverage": 81.37
               },
               "asimmetrica": {
                 "min": 2.0,
                 "max": 5.0,
-                "coverage": 67.18
+                "coverage": 67.21
               }
             },
             {
               "id": 1,
               "type": "Combinazioni con almeno una presenza",
-              "total": "9552",
+              "total": "9809",
               "mean": 2.99,
               "std": 1.69,
-              "skewness": 0.56,
+              "skewness": 0.57,
               "q1": 2.0,
               "q3": 4.0,
               "simmetrica": {
                 "min": 1.0,
                 "max": 5.0,
-                "coverage": 87.16
+                "coverage": 87.31
               },
               "asimmetrica": {
                 "min": 2.0,
                 "max": 4.0,
-                "coverage": 62.23
+                "coverage": 62.28
               }
             },
             {
               "id": 2,
               "type": "Combinazioni senza presenze",
-              "total": "38343",
+              "total": "39466",
               "mean": 12.01,
               "std": 1.69,
-              "skewness": -0.56,
+              "skewness": -0.57,
               "q1": 11.0,
               "q3": 13.0,
               "simmetrica": {
                 "min": 10.0,
                 "max": 14.0,
-                "coverage": 87.16
+                "coverage": 87.31
               },
               "asimmetrica": {
                 "min": 11.0,
                 "max": 13.0,
-                "coverage": 62.23
+                "coverage": 62.28
               }
             },
             {
               "id": 3,
               "type": "Massima frequenza di presenza",
-              "total": "4015",
+              "total": "4127",
               "mean": 1.26,
               "std": 0.57,
-              "skewness": 0.8,
+              "skewness": 0.83,
               "q1": 1.0,
               "q3": 2.0,
               "simmetrica": {
                 "min": 1.0,
                 "max": 2.0,
-                "coverage": 93.61
+                "coverage": 93.67
               },
               "asimmetrica": {
                 "min": 1.0,
                 "max": 2.0,
-                "coverage": 93.61
+                "coverage": 93.67
               }
             }
           ]
@@ -896,81 +896,81 @@
             {
               "id": 0,
               "type": "Totale presenze",
-              "total": "622",
-              "mean": 0.2,
+              "total": "638",
+              "mean": 0.19,
               "std": 0.47,
-              "skewness": 3.2,
+              "skewness": 3.19,
               "q1": 0.0,
               "q3": 0.0,
               "simmetrica": {
                 "min": -0.0,
                 "max": 1.0,
-                "coverage": 98.53
+                "coverage": 98.45
               },
               "asimmetrica": {
                 "min": 0.0,
                 "max": 0.0,
-                "coverage": 82.62
+                "coverage": 82.74
               }
             },
             {
               "id": 1,
               "type": "Combinazioni con almeno una presenza",
-              "total": "618",
+              "total": "634",
               "mean": 0.19,
               "std": 0.46,
-              "skewness": 3.08,
+              "skewness": 3.07,
               "q1": 0.0,
               "q3": 0.0,
               "simmetrica": {
                 "min": -0.0,
                 "max": 1.0,
-                "coverage": 98.59
+                "coverage": 98.51
               },
               "asimmetrica": {
                 "min": 0.0,
                 "max": 0.0,
-                "coverage": 82.62
+                "coverage": 82.74
               }
             },
             {
               "id": 2,
               "type": "Combinazioni senza presenze",
-              "total": "63122",
+              "total": "64966",
               "mean": 19.81,
               "std": 0.46,
-              "skewness": -3.08,
+              "skewness": -3.07,
               "q1": 20.0,
               "q3": 20.0,
               "simmetrica": {
                 "min": 19.0,
                 "max": 20.0,
-                "coverage": 98.59
+                "coverage": 98.51
               },
               "asimmetrica": {
                 "min": 20.0,
                 "max": 20.0,
-                "coverage": 82.62
+                "coverage": 82.74
               }
             },
             {
               "id": 3,
               "type": "Massima frequenza di presenza",
-              "total": "558",
-              "mean": 0.18,
+              "total": "570",
+              "mean": 0.17,
               "std": 0.38,
-              "skewness": 1.78,
+              "skewness": 1.79,
               "q1": 0.0,
               "q3": 0.0,
               "simmetrica": {
                 "min": -0.0,
                 "max": 1.0,
-                "coverage": 99.87
+                "coverage": 99.88
               },
               "asimmetrica": {
                 "min": 0.0,
                 "max": 0.0,
-                "coverage": 82.62
+                "coverage": 82.74
               }
             }
           ]
@@ -1074,81 +1074,81 @@
             {
               "id": 0,
               "type": "Totale presenze",
-              "total": "113736",
-              "mean": 35.96,
-              "std": 5.63,
+              "total": "117019",
+              "mean": 35.95,
+              "std": 5.6,
               "skewness": 0.07,
               "q1": 32.0,
               "q3": 40.0,
               "simmetrica": {
                 "min": 30.0,
                 "max": 42.0,
-                "coverage": 75.56
+                "coverage": 75.7
               },
               "asimmetrica": {
                 "min": 32.0,
                 "max": 40.0,
-                "coverage": 57.19
+                "coverage": 57.33
               }
             },
             {
               "id": 1,
               "type": "Combinazioni con almeno una presenza",
-              "total": "18937",
+              "total": "19488",
               "mean": 5.99,
               "std": 0.11,
-              "skewness": -8.61,
+              "skewness": -8.63,
               "q1": 6.0,
               "q3": 6.0,
               "simmetrica": {
                 "min": 6.0,
                 "max": 6.0,
-                "coverage": 98.7
+                "coverage": 98.71
               },
               "asimmetrica": {
                 "min": 6.0,
                 "max": 6.0,
-                "coverage": 98.7
+                "coverage": 98.71
               }
             },
             {
               "id": 2,
               "type": "Combinazioni senza presenze",
-              "total": "41",
+              "total": "42",
               "mean": 0.01,
               "std": 0.11,
-              "skewness": 8.61,
+              "skewness": 8.63,
               "q1": 0.0,
               "q3": 0.0,
               "simmetrica": {
                 "min": -0.0,
                 "max": 0.0,
-                "coverage": 98.7
+                "coverage": 98.71
               },
               "asimmetrica": {
                 "min": 0.0,
                 "max": 0.0,
-                "coverage": 98.7
+                "coverage": 98.71
               }
             },
             {
               "id": 3,
               "type": "Massima frequenza di presenza",
-              "total": "28765",
+              "total": "29582",
               "mean": 9.09,
-              "std": 1.8,
-              "skewness": 0.55,
+              "std": 1.79,
+              "skewness": 0.54,
               "q1": 8.0,
               "q3": 10.0,
               "simmetrica": {
                 "min": 7.0,
                 "max": 11.0,
-                "coverage": 85.8
+                "coverage": 86.14
               },
               "asimmetrica": {
                 "min": 8.0,
                 "max": 10.0,
-                "coverage": 62.03
+                "coverage": 62.37
               }
             }
           ]
@@ -1162,81 +1162,81 @@
             {
               "id": 0,
               "type": "Totale presenze",
-              "total": "15862",
+              "total": "16301",
               "mean": 5.01,
               "std": 2.53,
-              "skewness": 0.67,
+              "skewness": 0.68,
               "q1": 3.0,
               "q3": 7.0,
               "simmetrica": {
                 "min": 2.0,
                 "max": 8.0,
-                "coverage": 85.61
+                "coverage": 85.75
               },
               "asimmetrica": {
                 "min": 3.0,
                 "max": 7.0,
-                "coverage": 69.08
+                "coverage": 69.22
               }
             },
             {
               "id": 1,
               "type": "Combinazioni con almeno una presenza",
-              "total": "13506",
-              "mean": 4.27,
-              "std": 1.94,
-              "skewness": 0.35,
+              "total": "13879",
+              "mean": 4.26,
+              "std": 1.93,
+              "skewness": 0.36,
               "q1": 3.0,
               "q3": 6.0,
               "simmetrica": {
                 "min": 2.0,
                 "max": 6.0,
-                "coverage": 81.19
+                "coverage": 81.41
               },
               "asimmetrica": {
                 "min": 3.0,
                 "max": 6.0,
-                "coverage": 68.38
+                "coverage": 68.51
               }
             },
             {
               "id": 2,
               "type": "Combinazioni senza presenze",
-              "total": "33939",
-              "mean": 10.73,
-              "std": 1.94,
-              "skewness": -0.35,
+              "total": "34946",
+              "mean": 10.74,
+              "std": 1.93,
+              "skewness": -0.36,
               "q1": 9.0,
               "q3": 12.0,
               "simmetrica": {
                 "min": 9.0,
                 "max": 13.0,
-                "coverage": 81.19
+                "coverage": 81.41
               },
               "asimmetrica": {
                 "min": 9.0,
                 "max": 12.0,
-                "coverage": 68.38
+                "coverage": 68.51
               }
             },
             {
               "id": 3,
               "type": "Massima frequenza di presenza",
-              "total": "4877",
+              "total": "5019",
               "mean": 1.54,
               "std": 0.66,
-              "skewness": 0.84,
+              "skewness": 0.85,
               "q1": 1.0,
               "q3": 2.0,
               "simmetrica": {
                 "min": 1.0,
                 "max": 2.0,
-                "coverage": 92.13
+                "coverage": 92.2
               },
               "asimmetrica": {
                 "min": 1.0,
                 "max": 2.0,
-                "coverage": 92.13
+                "coverage": 92.2
               }
             }
           ]
@@ -1250,8 +1250,8 @@
             {
               "id": 0,
               "type": "Totale presenze",
-              "total": "935",
-              "mean": 0.3,
+              "total": "958",
+              "mean": 0.29,
               "std": 0.6,
               "skewness": 2.82,
               "q1": 0.0,
@@ -1259,72 +1259,72 @@
               "simmetrica": {
                 "min": -0.0,
                 "max": 1.0,
-                "coverage": 96.39
+                "coverage": 96.37
               },
               "asimmetrica": {
                 "min": 0.0,
                 "max": 0.0,
-                "coverage": 75.58
+                "coverage": 75.72
               }
             },
             {
               "id": 1,
               "type": "Combinazioni con almeno una presenza",
-              "total": "929",
+              "total": "952",
               "mean": 0.29,
               "std": 0.59,
-              "skewness": 2.78,
+              "skewness": 2.77,
               "q1": 0.0,
               "q3": 0.0,
               "simmetrica": {
                 "min": -0.0,
                 "max": 1.0,
-                "coverage": 96.48
+                "coverage": 96.46
               },
               "asimmetrica": {
                 "min": 0.0,
                 "max": 0.0,
-                "coverage": 75.58
+                "coverage": 75.72
               }
             },
             {
               "id": 2,
               "type": "Combinazioni senza presenze",
-              "total": "62211",
+              "total": "64048",
               "mean": 19.71,
               "std": 0.59,
-              "skewness": -2.78,
+              "skewness": -2.77,
               "q1": 20.0,
               "q3": 20.0,
               "simmetrica": {
                 "min": 19.0,
                 "max": 20.0,
-                "coverage": 96.48
+                "coverage": 96.46
               },
               "asimmetrica": {
                 "min": 20.0,
                 "max": 20.0,
-                "coverage": 75.58
+                "coverage": 75.72
               }
             },
             {
               "id": 3,
               "type": "Massima frequenza di presenza",
-              "total": "777",
-              "mean": 0.25,
-              "std": 0.44,
-              "skewness": 1.25,
+              "total": "795",
+              "mean": 0.24,
+              "std": 0.43,
+              "skewness": 1.26,
               "q1": 0.0,
               "q3": 0.0,
               "simmetrica": {
                 "min": -0.0,
                 "max": 1.0,
-                "coverage": 99.81
+                "coverage": 99.82
               },
               "asimmetrica": {
                 "min": 0.0,
                 "max": 0.0,
-                "coverage": 75.58
+                "coverage": 75.72
               }
             }
           ]
@@ -1451,18 +1451,18 @@
           "max": "1",
           "mean": 0.01,
           "std_dev": 0.11,
-          "skewness": 8.97,
+          "skewness": 8.87,
           "q1": 0.0,
           "q3": 0.0,
           "simmetrica": {
             "min": -0.0,
             "max": 0.0,
-            "coverage": 98.8
+            "coverage": 98.77
           },
           "asimmetrica": {
             "min": 0.0,
             "max": 0.0,
-            "coverage": 98.8
+            "coverage": 98.77
           }
         },
         {
@@ -1472,7 +1472,7 @@
           "max": "1",
           "mean": 0.0,
           "std_dev": 0.04,
-          "skewness": 25.45,
+          "skewness": 25.81,
           "q1": 0.0,
           "q3": 0.0,
           "simmetrica": {
@@ -1541,12 +1541,12 @@
           "simmetrica": {
             "min": -0.0,
             "max": 1.0,
-            "coverage": 97.79
+            "coverage": 97.76
           },
           "asimmetrica": {
             "min": 0.0,
             "max": 1.0,
-            "coverage": 97.79
+            "coverage": 97.76
           }
         }
       ]
@@ -1561,19 +1561,19 @@
           "min": 0.0,
           "max": 17.0,
           "mean": 1.92,
-          "std_dev": 2.29,
+          "std_dev": 2.28,
           "skewness": 1.77,
           "q1": 0.0,
           "q3": 3.0,
           "simmetrica": {
             "min": -0.0,
             "max": 4.0,
-            "coverage": 87.36
+            "coverage": 87.47
           },
           "asimmetrica": {
             "min": 0.0,
             "max": 3.0,
-            "coverage": 81.2
+            "coverage": 81.27
           }
         },
         {
@@ -1581,20 +1581,20 @@
           "type": "Ritardo massimo",
           "min": 5.0,
           "max": 147.0,
-          "mean": 34.98,
-          "std_dev": 17.61,
+          "mean": 35.04,
+          "std_dev": 17.65,
           "skewness": 1.3,
           "q1": 22.0,
           "q3": 44.0,
           "simmetrica": {
             "min": 17.0,
             "max": 53.0,
-            "coverage": 76.42
+            "coverage": 76.28
           },
           "asimmetrica": {
             "min": 22.0,
             "max": 44.0,
-            "coverage": 53.23
+            "coverage": 53.0
           }
         },
         {
@@ -1603,19 +1603,19 @@
           "min": 2.0,
           "max": 42.0,
           "mean": 13.99,
-          "std_dev": 5.74,
+          "std_dev": 5.73,
           "skewness": 0.72,
           "q1": 10.0,
           "q3": 18.0,
           "simmetrica": {
             "min": 8.0,
             "max": 20.0,
-            "coverage": 74.58
+            "coverage": 74.66
           },
           "asimmetrica": {
             "min": 10.0,
             "max": 18.0,
-            "coverage": 54.96
+            "coverage": 55.14
           }
         },
         {
@@ -1623,20 +1623,20 @@
           "type": "Ritardo totale",
           "min": 10.0,
           "max": 250.0,
-          "mean": 83.96,
-          "std_dev": 34.46,
+          "mean": 83.95,
+          "std_dev": 34.38,
           "skewness": 0.72,
-          "q1": 58.0,
+          "q1": 59.0,
           "q3": 105.0,
           "simmetrica": {
-            "min": 49.0,
+            "min": 50.0,
             "max": 118.0,
-            "coverage": 69.96
+            "coverage": 69.16
           },
           "asimmetrica": {
-            "min": 58.0,
+            "min": 59.0,
             "max": 105.0,
-            "coverage": 51.33
+            "coverage": 50.17
           }
         }
       ]
@@ -1650,20 +1650,20 @@
           "type": "Bounds primo estratto",
           "min": "1",
           "max": "65",
-          "mean": 13.46,
-          "std_dev": 11.18,
-          "skewness": 1.24,
+          "mean": 13.41,
+          "std_dev": 11.16,
+          "skewness": 1.25,
           "q1": 5.0,
           "q3": 19.0,
           "simmetrica": {
             "min": 2.0,
             "max": 25.0,
-            "coverage": 78.02
+            "coverage": 78.09
           },
           "asimmetrica": {
             "min": 5.0,
             "max": 19.0,
-            "coverage": 52.08
+            "coverage": 52.11
           }
         },
         {
@@ -1671,20 +1671,20 @@
           "type": "Bounds secondo estratto",
           "min": "2",
           "max": "82",
-          "mean": 26.38,
-          "std_dev": 13.92,
+          "mean": 26.34,
+          "std_dev": 13.93,
           "skewness": 0.58,
           "q1": 16.0,
           "q3": 35.0,
           "simmetrica": {
             "min": 12.0,
             "max": 40.0,
-            "coverage": 68.68
+            "coverage": 68.7
           },
           "asimmetrica": {
             "min": 16.0,
             "max": 35.0,
-            "coverage": 50.78
+            "coverage": 50.85
           }
         },
         {
@@ -1692,20 +1692,20 @@
           "type": "Bounds terzo estratto",
           "min": "4",
           "max": "85",
-          "mean": 39.66,
-          "std_dev": 15.42,
+          "mean": 39.58,
+          "std_dev": 15.41,
           "skewness": 0.14,
           "q1": 28.0,
           "q3": 50.0,
           "simmetrica": {
             "min": 24.0,
             "max": 55.0,
-            "coverage": 67.38
+            "coverage": 67.35
           },
           "asimmetrica": {
             "min": 28.0,
             "max": 50.0,
-            "coverage": 51.4
+            "coverage": 51.42
           }
         },
         {
@@ -1713,20 +1713,20 @@
           "type": "Bounds quarto estratto",
           "min": "9",
           "max": "87",
-          "mean": 52.74,
-          "std_dev": 15.03,
-          "skewness": -0.24,
+          "mean": 52.66,
+          "std_dev": 15.02,
+          "skewness": -0.23,
           "q1": 42.0,
           "q3": 64.0,
           "simmetrica": {
             "min": 38.0,
             "max": 68.0,
-            "coverage": 67.81
+            "coverage": 67.83
           },
           "asimmetrica": {
             "min": 42.0,
             "max": 64.0,
-            "coverage": 52.54
+            "coverage": 52.53
           }
         },
         {
@@ -1734,20 +1734,20 @@
           "type": "Bounds quinto estratto",
           "min": "14",
           "max": "89",
-          "mean": 65.58,
+          "mean": 65.54,
           "std_dev": 13.84,
-          "skewness": -0.65,
+          "skewness": -0.64,
           "q1": 57.0,
           "q3": 76.0,
           "simmetrica": {
             "min": 52.0,
             "max": 79.0,
-            "coverage": 67.14
+            "coverage": 67.03
           },
           "asimmetrica": {
             "min": 57.0,
             "max": 76.0,
-            "coverage": 50.38
+            "coverage": 50.25
           }
         },
         {
@@ -1755,20 +1755,20 @@
           "type": "Bounds sesto estratto",
           "min": "26",
           "max": "90",
-          "mean": 78.42,
-          "std_dev": 10.53,
-          "skewness": -1.35,
+          "mean": 78.41,
+          "std_dev": 10.54,
+          "skewness": -1.34,
           "q1": 73.0,
           "q3": 86.0,
           "simmetrica": {
             "min": 68.0,
             "max": 89.0,
-            "coverage": 78.51
+            "coverage": 78.3
           },
           "asimmetrica": {
             "min": 73.0,
             "max": 86.0,
-            "coverage": 53.27
+            "coverage": 53.0
           }
         }
       ]
@@ -1781,11 +1781,11 @@
         "type": "",
         "min": "81",
         "max": "467",
-        "mean": 276.23,
-        "std_dev": 61.23,
-        "skewness": -0.03,
+        "mean": 275.94,
+        "std_dev": 61.2,
+        "skewness": -0.02,
         "q1": 234.0,
-        "q3": 318.0,
+        "q3": 317.0,
         "simmetrica": {
           "min": 215.0,
           "max": 337.0,
@@ -1793,8 +1793,8 @@
         },
         "asimmetrica": {
           "min": 234.0,
-          "max": 318.0,
-          "coverage": 50.97
+          "max": 317.0,
+          "coverage": 50.31
         }
       }
     }

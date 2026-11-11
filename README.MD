@@ -43,6 +43,7 @@ super8/
 │       ├── __init__.py
 │       ├── common_lib.py
 │       ├── collector.py
+│       ├── count_forecast_matches.py
 │       ├── forecast.py
 │       └── stats_lib.py
 └── test/
@@ -135,6 +136,16 @@ python superenalotto/src/forecast.py --input_file superenalotto/data/estrazioni_
 ```
 
 The generated output is saved as `superenalotto/forecast.csv` by default, as defined in `config.ini`.
+
+## Count matches in forecast rows
+
+Enter six semicolon-separated integers to count how many appear in each row of the file configured by `forecast_output_file`:
+
+```bash
+python superenalotto/src/count_forecast_matches.py "8;34;53;54;71;80"
+```
+
+If the argument is omitted, the program prompts for the six integers.
 
 ## Configuration
 

@@ -104,11 +104,8 @@ if __name__ == "__main__":
     import sys
     import os
     import json
-    
-    # Default output file (optional)
-    DEFAULT_OUTPUT_FILE = "superenalotto/collector_results.json"
-    
-    def run_collector(args):
+        
+    def run_collector(args, log_file, log_level):
         """Run the collection pipeline using parsed args. Separated for profiling."""
         import time
 
@@ -125,32 +122,32 @@ if __name__ == "__main__":
 
         print(f"Collector - SuperEnalotto Data Collector")
         print(f"=========================================")
-        print(f"Input file: {args.input_file}")
+        print(f"Input file: {args.input}")
         print(f"Output file: {args.output}")
         print(f"History size: {args.history_size}")
         print(f"Sample size: {args.sample_size}")
         print()
 
         # Validate input file exists
-        if not os.path.exists(args.input_file):
-            print(f"Error: Input file not found: {args.input_file}")
+        if not os.path.exists(args.input):
+            print(f"Error: Input file not found: {args.input}")
             sys.exit(1)
 
         # log file
-        logging.basicConfig(filename='superenalotto/analisi_statistiche.log', filemode='w', level=logging.INFO)
+        logging.basicConfig(filename=log_file, filemode='w', level=getattr(logging, log_level.upper()))
         logging.info(f"Inizio analisi statistiche {datetime.datetime.now()}")
 
         # Initialize collector
-        collector = Collector(args.input_file, args.history_size, sample_size)
-        print(f"Collector initialized with: data_file={args.input_file}, history_size={args.history_size}, sample_size={sample_size}")
-        logging.info(f"Collector initialized with: data_file={args.input_file}, history_size={args.history_size}, sample_size={sample_size}")
+        collector = Collector(args.input, args.history_size, sample_size)
+        print(f"Collector initialized with: data_file={args.input}, history_size={args.history_size}, sample_size={sample_size}")
+        logging.info(f"Collector initialized with: data_file={args.input}, history_size={args.history_size}, sample_size={sample_size}")
 
         # Get historical data
         history_data = collector.collect_data()
 
         # Initialize output file
         results = {}
-        results["origine_dati"] = args.input_file
+        results["origine_dati"] = args.input
         results["ultima_estrazione"] = collector.last_extraction_date
         results["elementi_storico"] = len(history_data)
 
@@ -217,12 +214,23 @@ if __name__ == "__main__":
         import cProfile
         import pstats
         import io
+        import configparser
+            
+        # Configuration
+        config = configparser.ConfigParser()
+        config.read("config.ini")
+
+        DEFAULT_DATA_FILE = config.get('collector', 'input_file')
+        DEFAULT_OUTPUT_FILE = config.get('collector', 'output_file')
+        DEFAULT_SAMPLE_SIZE = config.get('collector', 'sample_size')
+        DEFAULT_LOG_FILE = config.get('logging', 'log_file')
+        DEFAULT_LOG_LEVEL = config.get('logging', 'log_level')
 
         parser = argparse.ArgumentParser(description="SuperEnalotto Data Collector")
-        parser.add_argument("input_file", help="Path to CSV data file")
-        parser.add_argument("-o", "--output", default=DEFAULT_OUTPUT_FILE, help="Path to output JSON file")
+        parser.add_argument("-i", "--input", default=DEFAULT_DATA_FILE, help="Path to lottery CSV data file")
+        parser.add_argument("-o", "--output", default=DEFAULT_OUTPUT_FILE, help="Path to statistics output JSON file")
         parser.add_argument("--history-size", type=int, default=None, help="History size (integer, default: None)")
-        parser.add_argument("--sample-size", default="15", help="Sample size: 15, 30, 60, 90, or 'all' (default: 15)")
+        parser.add_argument("--sample-size", default=DEFAULT_SAMPLE_SIZE, help="Sample size: 15, 30, 60, 90, or 'all' (default: 15)")
         parser.add_argument("--profile", action="store_true", help="Run under cProfile and dump stats")
         parser.add_argument("--profile-output", default="collector.prof", help="Filename to dump cProfile stats")
         parser.add_argument("--profile-top", type=int, default=20, help="Number of top functions to print from profile")
@@ -242,7 +250,7 @@ if __name__ == "__main__":
             print(f"Profiling results (top {args.profile_top} functions):")
             print(s.getvalue())
         else:
-            run_collector(args)
+            run_collector(args, DEFAULT_LOG_FILE, DEFAULT_LOG_LEVEL)
 
     # Run main if executed directly
     if __name__ == "__main__":
